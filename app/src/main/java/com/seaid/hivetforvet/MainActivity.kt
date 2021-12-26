@@ -6,10 +6,8 @@ import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.auth.User
 import com.seaid.hivetforvet.databinding.ActivityMainBinding
-import com.seaid.hivetforvet.databinding.ActivityUserProfileBinding
-import com.seaid.hivetforvet.models.drh
+import com.seaid.hivetforvet.models.Vet
 
 class MainActivity : AppCompatActivity() {
 
@@ -42,7 +40,7 @@ class MainActivity : AppCompatActivity() {
 
         uidRef.get().addOnSuccessListener { doc ->
             if (doc != null) {
-                val user = doc.toObject(drh::class.java)
+                val user = doc.toObject(Vet::class.java)
                 mBinding.userName.text = "Hai "+user!!.Name+"!"
                 if (user!!.photoProfile == "" || user.photoProfile == null){
                     mBinding.imageView3.setImageResource(R.drawable.profile)

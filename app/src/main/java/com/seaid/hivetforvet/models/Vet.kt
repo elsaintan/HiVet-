@@ -1,4 +1,4 @@
-package com.seaid.hivetforvet
+package com.seaid.hivetforvet.models
 
 class Vet {
     var Name: String? = null
@@ -10,10 +10,12 @@ class Vet {
     var STR : String? = null
     var konsultasi : String?=null
     var booking : String?=null
+    var tempat : String?=null
+    var WorkExp : String ?= null
 
     constructor()
 
-    constructor(Name: String?, Contact: String?, uid: String?, photoProfile: String?, email: String?, SIP: String?, STR: String?, konsultasi: String?, booking: String?) {
+    constructor(Name: String?, Contact: String?, uid: String?, photoProfile: String?, email: String?, SIP: String?, STR: String?, konsultasi: String?, booking: String?, tempat:String?, WorkExp: String?) {
         this.Name = Name
         this.Contact = Contact
         this.uid = uid
@@ -23,6 +25,8 @@ class Vet {
         this.STR = STR
         this.konsultasi = konsultasi
         this.booking = booking
+        this.tempat = tempat
+        this.WorkExp = WorkExp
     }
 
 
