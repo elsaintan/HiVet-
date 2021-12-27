@@ -7,4 +7,12 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="colorPrimary">#EBF6FF</color>
+    <color name="colorPrimaryDark">#8BB2D1</color>
+    <color name="colorAccent">#8BB2D1</color>
+    <color name="green_lumut">#419488</color>
+    <color name="green_terang">#B3E59F</color>
+    <color name="biru_keren">#8BB2D1</color>
+    <color name="biru_lebih_keren">#EBF6FF</color>
+    <color name="putih_agak">#F7F7F7</color>
 </resources>
