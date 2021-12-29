@@ -58,13 +58,8 @@ class EditProfileActivity : AppCompatActivity() {
         storage = FirebaseStorage.getInstance()
         storageRef = storage.reference
 
-        var type = intent.getIntExtra("type", 0)
-
-        if (type == 2){
-            showDataUser()
-        }
-
-
+        showDataUser()
+        editBinding.saveBTN.visibility = View.VISIBLE
 
         editBinding.userImage.setOnClickListener{
             chooseImage()
@@ -121,7 +116,7 @@ class EditProfileActivity : AppCompatActivity() {
             try {
                 var bitmap: Bitmap = MediaStore.Images.Media.getBitmap(contentResolver, filePath)
                 editBinding.userImage.setImageBitmap(bitmap)
-                editBinding.saveBTN.visibility = View.VISIBLE
+
             }catch (e: IOException){
                 e.printStackTrace()
             }

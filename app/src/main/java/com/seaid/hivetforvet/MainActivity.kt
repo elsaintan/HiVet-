@@ -36,8 +36,15 @@ class MainActivity : AppCompatActivity() {
         setUser(uId)
 
         mBinding.imageLogout.setOnClickListener {
+            mAuth.signOut()
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
+
+        mBinding.imageProfile.setOnClickListener {
             startActivity(Intent(this, UserProfileActivity::class.java))
         }
+
     }
 
     private fun setUser(uId: String) {
