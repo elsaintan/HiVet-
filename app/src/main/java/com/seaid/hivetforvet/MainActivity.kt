@@ -1,5 +1,6 @@
 package com.seaid.hivetforvet
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -33,6 +34,10 @@ class MainActivity : AppCompatActivity() {
         val uId = mAuth.currentUser!!.uid
 
         setUser(uId)
+
+        mBinding.imageLogout.setOnClickListener {
+            startActivity(Intent(this, UserProfileActivity::class.java))
+        }
     }
 
     private fun setUser(uId: String) {

@@ -39,15 +39,13 @@ class LoginActivity : AppCompatActivity() {
 
         }
 
-
-    }
-
-    private fun forgotPassword() {
-        //code for jumping to signup
         tvFPassword.setOnClickListener {
             startActivity(Intent(this, ForgotPasswordActivity::class.java))
         }
+
+
     }
+
 
     private fun validateData() {
         //get data

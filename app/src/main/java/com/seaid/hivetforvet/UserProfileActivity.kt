@@ -36,14 +36,10 @@ class UserProfileActivity : AppCompatActivity() {
 
             loadProfile(currentUser?.uid!!)
             binding.suntingTV.setOnClickListener {
-                toSuntingProfile()
+                startActivity(Intent(this, EditProfileActivity::class.java))
             }
 
         }
-
-    private fun toSuntingProfile() {
-        startActivity(Intent(this, EditProfileActivity::class.java))
-    }
 
     private fun loadProfile(id : String) {
             val uidRef  = mDbRef.collection("drh").document(id)
