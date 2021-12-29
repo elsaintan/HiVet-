@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/biru_lebih_keren"
     tools:context=".EditProfileActivity">
 
     <ProgressBar
@@ -12,16 +13,30 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:visibility="gone"
-        android:indeterminateTint="@color/design_default_color_primary"/>
+        android:indeterminateTint="@color/design_default_color_primary"
+        android:visibility="gone" />
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/userImage"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:src="@drawable/profile" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="250dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/userImage"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:src="@drawable/profile" />
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <RelativeLayout
         android:id="@+id/userRL"
@@ -35,6 +50,10 @@
             android:id="@+id/userNameTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/kotak_input_putih"
+            android:hint="Masukkan nama"
+            android:minHeight="48dp"
+            android:paddingLeft="8dp"
             android:text="Nama" />
 
         <EditText
@@ -43,6 +62,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/userNameTV"
             android:layout_marginTop="15dp"
+            android:background="@drawable/kotak_input_putih"
+            android:minHeight="48dp"
+            android:paddingLeft="8dp"
             android:text="Kontak" />
 
         <EditText
@@ -51,31 +73,37 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/kontakUserTV"
             android:layout_marginTop="15dp"
+            android:background="@drawable/kotak_input_putih"
+            android:minHeight="48dp"
+            android:paddingLeft="8dp"
             android:text="Praktik" />
 
         <TextView
             android:id="@+id/userSTRtv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
             android:layout_below="@id/userPraktikTV"
-            android:text="STR"/>
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/roboto_bold"
+            android:text="STR" />
 
         <TextView
             android:id="@+id/userSIPtv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
             android:layout_below="@id/userSTRtv"
-            android:text="SIP"/>
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/roboto_bold"
+            android:text="SIP" />
 
         <TextView
             android:id="@+id/userWprkExpTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
             android:layout_below="@id/userSIPtv"
-            android:text="Pengalaman Kerja"/>
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Pengalaman Kerja" />
 
 
     </RelativeLayout>
@@ -84,15 +112,24 @@
         android:id="@+id/menuRL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_below="@id/userRL">
+        android:layout_below="@id/userRL"
+        android:layout_marginTop="30dp">
 
-        <Button
-            android:id="@+id/saveBTN"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:text="Sunting" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/saveBTN"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/green_terang"
+                android:text="Simpan"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </RelativeLayout>
 

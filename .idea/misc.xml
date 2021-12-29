@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android Studio/Hivet-doctor/HiVet-/app/src/main/res/layout/activity_edit_profile.xml" value="0.264" />
+        <entry key="..\:/Android Studio/Hivet-doctor/HiVet-/app/src/main/res/layout/activity_forgot_password.xml" value="0.2" />
         <entry key="..\:/Android Studio/Hivet-doctor/HiVet-/app/src/main/res/layout/activity_login.xml" value="0.152" />
         <entry key="..\:/Android Studio/Hivet-doctor/HiVet-/app/src/main/res/layout/activity_user_profile.xml" value="0.176" />
         <entry key="..\:/SMT 7/TA/HiVetForVet/app/src/main/res/layout/activity_edit_profile.xml" value="0.23229166666666667" />
