@@ -10,6 +10,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HiVetForVet">
         <activity
+            android:name=".AddJadwalPraktikActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RincianAppointmentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".JanjiTemuActivity"
+            android:exported="false" />
+        <activity
+            android:name=".KonsultasiActivity"
+            android:exported="false" />
+        <activity
             android:name=".EditProfileActivity"
             android:exported="false" />
         <activity

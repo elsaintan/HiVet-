@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".KonsultasiActivity">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        android:id="@+id/fragment_konsultasi"/>
+
+    <Button
+        android:id="@+id/fm1Btn"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="50dp"
+        android:backgroundTint="@color/black"
+        android:text="Permintaan konsultasi"
+        android:textSize="25px" />
+
+    <Button
+        android:id="@+id/fm2Btn"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_marginStart="250dp"
+        android:layout_marginTop="50dp"
+        android:backgroundTint="@color/black"
+        android:text="Sedang berjalan"
+        android:textSize="25px"/>
+
+
+
+
+</RelativeLayout>
