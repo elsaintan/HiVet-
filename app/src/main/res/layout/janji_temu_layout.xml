@@ -11,10 +11,10 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_margin="16dp"
+            android:layout_width="350dp"
+            android:layout_height="160dp"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:layout_margin="8dp"
             android:background="@drawable/frame_transparan"
             android:orientation="horizontal">
 
@@ -24,8 +24,8 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/photouser"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:layout_margin="16dp"
                     android:src="@drawable/profile"
                     app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +37,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="Nama User"
-                    android:textSize="26sp"
+                    android:textSize="20sp"
                     app:layout_constraintStart_toEndOf="@+id/photouser"
                     app:layout_constraintTop_toTopOf="@+id/photouser" />
 
@@ -46,7 +46,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Jenis hewan"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="@+id/nameTV"
                     app:layout_constraintTop_toBottomOf="@+id/nameTV" />
 
@@ -55,7 +55,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Nama hewan"
-                    android:textSize="20sp"
+                    android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="@+id/jenisTV"
                     app:layout_constraintTop_toBottomOf="@+id/jenisTV" />
 
