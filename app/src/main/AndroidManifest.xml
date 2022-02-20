@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HiVetForVet">
         <activity
+            android:name=".ChatActivity"
+            android:exported="false" />
+        <activity
             android:name=".AddJadwalPraktikActivity"
             android:exported="false" />
         <activity
