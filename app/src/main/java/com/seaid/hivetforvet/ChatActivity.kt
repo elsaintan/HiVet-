@@ -1,20 +1,29 @@
 package com.seaid.hivetforvet
 
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
-import com.google.firebase.firestore.auth.User
+import com.google.firebase.firestore.FirebaseFirestore
 import com.seaid.hivetforvet.adapters.MessageAdapter
 import com.seaid.hivetforvet.models.Chat
+import com.seaid.hivetforvet.models.User
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 import java.util.ArrayList
 import java.util.HashMap
+import java.util.*
 
 class ChatActivity : AppCompatActivity() {
 
@@ -22,6 +31,12 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var userMessageInput: EditText
     private lateinit var userMessageList: RecyclerView
     private lateinit var messageAdapter: MessageAdapter
+    private lateinit var textName: TextView
+    private lateinit var fotoProfile: ImageView
+    private lateinit var tanggal: TextView
+    private lateinit var konsul: TextView
+
+    private lateinit var mDbRef: FirebaseFirestore
 
     var mAuth: FirebaseUser? = null
     var reference: DatabaseReference? = null
@@ -30,6 +45,7 @@ class ChatActivity : AppCompatActivity() {
 
     var mchat: List<Chat>? = null
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
@@ -37,6 +53,10 @@ class ChatActivity : AppCompatActivity() {
         sendMessage = findViewById(R.id.btn_send)
         userMessageInput = findViewById(R.id.userMessageInput)
         userMessageList = findViewById(R.id.chats)
+        textName = findViewById(R.id.textName)
+        fotoProfile = findViewById(R.id.fotoProfile)
+        tanggal = findViewById(R.id.tanggal)
+        konsul = findViewById(R.id.konsul)
 
 
         val userid = intent.getStringExtra("Uid")
@@ -73,7 +93,36 @@ class ChatActivity : AppCompatActivity() {
         })
 
         SeenMessage(userid.toString())
+        showDataUser(userid)
 
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun showDataUser(userid: String?) {
+        val current = LocalDateTime.now()
+        val simpleDateFormat = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
+        val formatted = current.format(simpleDateFormat)
+        tanggal.text = formatted
+
+        mDbRef = FirebaseFirestore.getInstance()
+        val uidRef  = mDbRef.collection("users").document(userid.toString())
+
+        uidRef.get().addOnSuccessListener { doc ->
+            if (doc != null) {
+                val user = doc.toObject(User::class.java)
+                textName.text = user!!.name
+                if (user!!.photoProfile == ""){
+                    fotoProfile.setImageResource(R.drawable.profile)
+                }else{
+                    Glide.with(this).load(user!!.photoProfile).into(fotoProfile)
+                }
+                //Toast.makeText(this, "{$user.name}", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "No such document", Toast.LENGTH_SHORT).show()
+            }
+        }.addOnFailureListener { exception ->
+            Toast.makeText(this, "get failed with "+exception, Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun SeenMessage(userid: String) {
@@ -112,7 +161,9 @@ class ChatActivity : AppCompatActivity() {
                 mchat.clear()
                 for (snapshot in dataSnapshot.children) {
                     val chat: Chat? = snapshot.getValue(Chat::class.java)
-                    mchat.add(chat!!)
+                    if (chat?.getReceiver().equals(userid) && chat?.getSender().equals(mAuth!!.uid)){
+                        mchat.add(chat!!)
+                    }
                     messageAdapter = MessageAdapter(applicationContext, mchat)
                     messageAdapter.notifyDataSetChanged()
                     userMessageList!!.adapter = messageAdapter
@@ -123,7 +174,7 @@ class ChatActivity : AppCompatActivity() {
         })
     }
 
-    private fun Status(status: String) {
+    /**private fun Status(status: String) {
         reference = FirebaseDatabase.getInstance().getReference("users").child(mAuth!!.uid)
         val hashMap = HashMap<String, Any>()
         hashMap["status"] = status
@@ -139,6 +190,6 @@ class ChatActivity : AppCompatActivity() {
         super.onPause()
         reference!!.removeEventListener(seenEventListener!!)
         Status("offline")
-    }
+    } **/
 
 }
