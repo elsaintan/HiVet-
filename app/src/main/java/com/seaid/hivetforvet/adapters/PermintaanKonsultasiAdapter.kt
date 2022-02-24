@@ -21,7 +21,7 @@ class permintaanKonsultasiAdapter (private val permintaanList : ArrayList<permin
     }
 
     override fun onBindViewHolder(holder: permintaanKonsultasiAdapter.MyViewHolder, position: Int) {
-        TODO("Not yet implemented")
+
     }
 
     override fun getItemCount(): Int {
