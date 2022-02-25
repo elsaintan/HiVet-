@@ -1,5 +1,6 @@
 package com.seaid.hivetforvet.adapters
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FirebaseFirestore
+import com.seaid.hivetforvet.ChatActivity
 import com.seaid.hivetforvet.R
 import com.seaid.hivetforvet.models.User
 import com.seaid.hivetforvet.models.konsultasi
@@ -56,10 +58,30 @@ class kBerjalanAdapter (private val konsultasiList : ArrayList<konsultasi>) : Re
             "3" -> holder.button.text = "Chat"
             "4" -> holder.button.text = "Selesai"
             "5" -> holder.button.text = "Ditolak"
-            "6" -> holder.button.text = "Kadaluarsa"
+            "6" -> holder.button.text = "Kedaluarsa"
+        }
+
+        holder.button.setOnClickListener {
+            if (holder.button.text == "Chat"){
+                val intent = Intent(holder.itemView.context, ChatActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                intent.putExtra("Uid", konsultasi.id_user)
+                holder.itemView.context.startActivity(intent)
+            }else if (holder.button.text == "Terima"){
+                changeStatus(konsultasi)
+            }
+
         }
 
     }
+
+    private fun changeStatus(konsultasi: konsultasi) {
+        val konsul : konsultasi = konsultasi(konsultasi.id, konsultasi.id_drh, konsultasi.id_user, konsultasi.id_pet, konsultasi.tanggal, "2")
+        mDbRef.collection("konsultasi").document(konsultasi.id.toString()).set(konsul)
+        
+    }
+
+
 
 
     override fun getItemCount(): Int {
@@ -76,9 +98,7 @@ class kBerjalanAdapter (private val konsultasiList : ArrayList<konsultasi>) : Re
 
 
         override fun onClick(v: View?) {
-            button.setOnClickListener {
-                //blablabla
-            }
+
         }
 
     }
