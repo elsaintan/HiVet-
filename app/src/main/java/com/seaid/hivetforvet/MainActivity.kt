@@ -45,6 +45,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, UserProfileActivity::class.java))
         }
 
+        mBinding.bkonsultasi.setOnClickListener {
+            startActivity(Intent(this, KonsultasiActivity::class.java))
+        }
+
     }
 
     private fun setUser(uId: String) {
