@@ -5,12 +5,14 @@ class Chat {
     private var receiver: String? = null
     private var message: String? = null
     private var isseen = false
+    private var idkonsul: String? = null
 
-    fun Chat(sender: String?, receiver: String?, message: String?, isseen: Boolean) {
+    fun Chat(sender: String?, receiver: String?, message: String?, isseen: Boolean, idkonsul: String?) {
         this.sender = sender
         this.receiver = receiver
         this.message = message
         this.isseen = isseen
+        this.idkonsul = idkonsul
     }
     constructor()
 
@@ -36,6 +38,14 @@ class Chat {
 
     fun setMessage(message: String?) {
         this.message = message
+    }
+
+    fun getIdkonsul(): String? {
+        return idkonsul
+    }
+
+    fun setIdkonsul(idkonsul: String?) {
+        this.idkonsul = idkonsul
     }
 
     fun isIsseen(): Boolean {

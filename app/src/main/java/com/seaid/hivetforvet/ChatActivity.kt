@@ -1,5 +1,7 @@
 package com.seaid.hivetforvet
 
+import android.app.AlertDialog
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -18,6 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.seaid.hivetforvet.adapters.MessageAdapter
 import com.seaid.hivetforvet.models.Chat
 import com.seaid.hivetforvet.models.User
+import com.seaid.hivetforvet.models.konsultasi
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -35,6 +38,8 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var fotoProfile: ImageView
     private lateinit var tanggal: TextView
     private lateinit var konsul: TextView
+    private lateinit var end : TextView
+    private lateinit var builder: AlertDialog.Builder
 
     private lateinit var mDbRef: FirebaseFirestore
 
@@ -57,9 +62,13 @@ class ChatActivity : AppCompatActivity() {
         fotoProfile = findViewById(R.id.fotoProfile)
         tanggal = findViewById(R.id.tanggal)
         konsul = findViewById(R.id.konsul)
+        end = findViewById(R.id.imageInfo)
+        builder = AlertDialog.Builder(this)
 
 
         val userid = intent.getStringExtra("Uid")
+        val idKonsul = intent.getStringExtra("id")
+        konsul.text = idKonsul
         mAuth = FirebaseAuth.getInstance().currentUser
         reference = FirebaseDatabase.getInstance().getReference("users").child(userid.toString())
 
@@ -71,7 +80,7 @@ class ChatActivity : AppCompatActivity() {
         sendMessage.setOnClickListener {
             val msg = userMessageInput.getText().toString()
             if (!msg.isEmpty()) {
-                SendMessage(mAuth!!.uid, userid.toString(), msg)
+                SendMessage(mAuth!!.uid, userid.toString(), msg, idKonsul.toString())
             } else {
                 Toast.makeText(
                     this@ChatActivity,
@@ -86,15 +95,42 @@ class ChatActivity : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val user: User? = dataSnapshot.getValue(User::class.java)
 
-                ReadMessage(mAuth!!.uid, userid)
+                ReadMessage(userid, idKonsul.toString())
             }
 
             override fun onCancelled(databaseError: DatabaseError) {}
         })
 
-        SeenMessage(userid.toString())
+        SeenMessage(userid.toString(), idKonsul.toString())
         showDataUser(userid)
 
+        end.setOnClickListener {
+            builder.setTitle("Alert!")
+                .setMessage("Akhiri konsultasi")
+                .setCancelable(true)
+                .setPositiveButton("Yes"){dialogInterface,it ->
+                    setAkhirKonsul(idKonsul)
+                }
+                .setNegativeButton("No"){dialogInterface,it ->
+                    dialogInterface.cancel()
+                }
+        }
+
+    }
+
+    private fun setAkhirKonsul(idKonsul: String?) {
+        val id = idKonsul
+        val id_user = intent.getStringExtra("Uid")
+        val id_pet = intent.getStringExtra("id_pet")
+        val tanggal = intent.getStringExtra("tanggal")
+
+        val konsultasi = konsultasi(id, mAuth!!.uid, id_user, id_pet,tanggal,"4")
+        mDbRef.collection("konsultasi").document(id.toString()).set(konsultasi)
+            .addOnSuccessListener {
+
+            }.addOnFailureListener {
+
+            }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -116,7 +152,6 @@ class ChatActivity : AppCompatActivity() {
                 }else{
                     Glide.with(this).load(user!!.photoProfile).into(fotoProfile)
                 }
-                //Toast.makeText(this, "{$user.name}", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(this, "No such document", Toast.LENGTH_SHORT).show()
             }
@@ -125,13 +160,13 @@ class ChatActivity : AppCompatActivity() {
         }
     }
 
-    private fun SeenMessage(userid: String) {
+    private fun SeenMessage(userid: String, id_konsul: String) {
         reference = FirebaseDatabase.getInstance().getReference("Chats")
         seenEventListener = reference!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (sp in dataSnapshot.children) {
                     val chat: Chat? = sp.getValue(Chat::class.java)
-                    if (chat?.getReceiver().equals(mAuth!!.uid) && chat?.getSender().equals(userid)) {
+                    if (chat?.getReceiver().equals(mAuth!!.uid) && chat?.getSender().equals(userid) ) {
                         val hm = HashMap<String, Any>()
                         hm["isseen"] = true
                         sp.ref.updateChildren(hm)
@@ -143,17 +178,18 @@ class ChatActivity : AppCompatActivity() {
         })
     }
 
-    private fun SendMessage(sender: String, receiver: String, message: String) {
+    private fun SendMessage(sender: String, receiver: String, message: String, id_konsul: String) {
         val reference = FirebaseDatabase.getInstance().reference
         val hashMap = HashMap<String, Any>()
         hashMap["sender"] = sender
         hashMap["receiver"] = receiver
         hashMap["message"] = message
         hashMap["isseen"] = false
+        hashMap["idkonsul"] = id_konsul
         reference.child("Chats").push().setValue(hashMap)
     }
 
-    fun ReadMessage(myid: String?, userid: String?) {
+    fun ReadMessage(userid: String?, id_konsul: String) {
         val mchat = ArrayList<Chat>()
         val reference = FirebaseDatabase.getInstance().getReference("Chats")
         reference.addValueEventListener(object : ValueEventListener {
@@ -161,9 +197,14 @@ class ChatActivity : AppCompatActivity() {
                 mchat.clear()
                 for (snapshot in dataSnapshot.children) {
                     val chat: Chat? = snapshot.getValue(Chat::class.java)
-                    if (chat?.getReceiver().equals(userid) && chat?.getSender().equals(mAuth!!.uid)){
-                        mchat.add(chat!!)
+                    if (chat?.getIdkonsul().equals(id_konsul)){
+                        if (chat?.getReceiver().equals(userid) && chat?.getSender().equals(mAuth!!.uid)){
+                            mchat.add(chat!!)
+                        }else if (chat?.getReceiver().equals(mAuth!!.uid) && chat?.getSender().equals(userid)){
+                            mchat.add(chat!!)
+                        }
                     }
+
                     messageAdapter = MessageAdapter(applicationContext, mchat)
                     messageAdapter.notifyDataSetChanged()
                     userMessageList!!.adapter = messageAdapter

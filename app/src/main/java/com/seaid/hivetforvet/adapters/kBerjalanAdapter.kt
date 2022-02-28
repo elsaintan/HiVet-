@@ -31,6 +31,7 @@ class kBerjalanAdapter (private val konsultasiList : ArrayList<konsultasi>) : Re
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val konsultasi : konsultasi = konsultasiList[position]
+        mDbRef = FirebaseFirestore.getInstance()
         val data1 = mDbRef.collection("users").document(konsultasi.id_user.toString())
         data1.get().addOnSuccessListener {
             val user = it.toObject(User::class.java)
@@ -66,6 +67,9 @@ class kBerjalanAdapter (private val konsultasiList : ArrayList<konsultasi>) : Re
                 val intent = Intent(holder.itemView.context, ChatActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 intent.putExtra("Uid", konsultasi.id_user)
+                intent.putExtra("id", konsultasi.id)
+                intent.putExtra("idpet", konsultasi.id_pet)
+                intent.putExtra("tanggal", konsultasi.tanggal)
                 holder.itemView.context.startActivity(intent)
             }else if (holder.button.text == "Terima"){
                 changeStatus(konsultasi)
