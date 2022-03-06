@@ -91,7 +91,7 @@
 
 
                         <TextView
-                            android:id="@+id/textView2"
+                            android:id="@+id/text_saldo_kamu"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="16dp"
@@ -112,7 +112,7 @@
                             android:textSize="16sp"
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+                            app:layout_constraintTop_toBottomOf="@+id/text_saldo_kamu" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <ImageButton
