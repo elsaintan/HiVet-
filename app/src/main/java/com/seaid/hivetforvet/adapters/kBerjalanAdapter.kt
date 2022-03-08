@@ -67,9 +67,12 @@ class kBerjalanAdapter (private val konsultasiList : ArrayList<konsultasi>) : Re
                 val intent = Intent(holder.itemView.context, ChatActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 intent.putExtra("Uid", konsultasi.id_user)
+                //intent.putExtra("id", )
                 intent.putExtra("id", konsultasi.id)
                 intent.putExtra("idpet", konsultasi.id_pet)
                 intent.putExtra("tanggal", konsultasi.tanggal)
+                intent.putExtra("idtransaction", konsultasi.id_transaction)
+                intent.putExtra("harga", konsultasi.harga.toString())
                 holder.itemView.context.startActivity(intent)
             }else if (holder.button.text == "Terima"){
                 changeStatus(konsultasi)
@@ -80,7 +83,7 @@ class kBerjalanAdapter (private val konsultasiList : ArrayList<konsultasi>) : Re
     }
 
     private fun changeStatus(konsultasi: konsultasi) {
-        val konsul : konsultasi = konsultasi(konsultasi.id, konsultasi.id_drh, konsultasi.id_user, konsultasi.id_pet, konsultasi.tanggal, "2")
+        val konsul : konsultasi = konsultasi(konsultasi.id, konsultasi.id_drh, konsultasi.id_user, konsultasi.id_pet, konsultasi.tanggal, "2", konsultasi.id_transaction, konsultasi.harga)
         mDbRef.collection("konsultasi").document(konsultasi.id.toString()).set(konsul)
         
     }

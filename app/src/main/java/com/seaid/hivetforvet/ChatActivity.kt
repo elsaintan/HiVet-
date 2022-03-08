@@ -1,6 +1,6 @@
 package com.seaid.hivetforvet
 
-import android.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -39,7 +39,6 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var tanggal: TextView
     private lateinit var konsul: TextView
     private lateinit var end : TextView
-    private lateinit var builder: AlertDialog.Builder
 
     private lateinit var mDbRef: FirebaseFirestore
 
@@ -63,7 +62,7 @@ class ChatActivity : AppCompatActivity() {
         tanggal = findViewById(R.id.tanggal)
         konsul = findViewById(R.id.konsul)
         end = findViewById(R.id.imageInfo)
-        builder = AlertDialog.Builder(this)
+
 
 
         val userid = intent.getStringExtra("Uid")
@@ -78,6 +77,7 @@ class ChatActivity : AppCompatActivity() {
         userMessageList.setLayoutManager(manager)
 
         sendMessage.setOnClickListener {
+            //Toast.makeText(this, intent.getStringExtra("idpet"), Toast.LENGTH_SHORT).show()
             val msg = userMessageInput.getText().toString()
             if (!msg.isEmpty()) {
                 SendMessage(mAuth!!.uid, userid.toString(), msg, idKonsul.toString())
@@ -105,6 +105,9 @@ class ChatActivity : AppCompatActivity() {
         showDataUser(userid)
 
         end.setOnClickListener {
+
+            //Toast.makeText(this, mAuth!!.email, Toast.LENGTH_SHORT).show()
+            val builder = AlertDialog.Builder(this)
             builder.setTitle("Alert!")
                 .setMessage("Akhiri konsultasi")
                 .setCancelable(true)
@@ -114,20 +117,25 @@ class ChatActivity : AppCompatActivity() {
                 .setNegativeButton("No"){dialogInterface,it ->
                     dialogInterface.cancel()
                 }
+            val alert : AlertDialog = builder.create()
+            alert.show()
         }
 
     }
 
     private fun setAkhirKonsul(idKonsul: String?) {
         val id = idKonsul
+        //mDbRef.collection("konsul").document(id.toString())
         val id_user = intent.getStringExtra("Uid")
         val id_pet = intent.getStringExtra("id_pet")
         val tanggal = intent.getStringExtra("tanggal")
+        val id_transaction = intent.getStringExtra("idtransaction")
+        val harga = intent.getStringExtra("harga")
 
-        val konsultasi = konsultasi(id, mAuth!!.uid, id_user, id_pet,tanggal,"4")
+        val konsultasi = konsultasi(id, mAuth!!.uid, id_user, id_pet,tanggal,"4", id_transaction, harga?.toDouble())
         mDbRef.collection("konsultasi").document(id.toString()).set(konsultasi)
             .addOnSuccessListener {
-
+                startActivity(Intent(this, RiwayatKonsulActivity::class.java))
             }.addOnFailureListener {
 
             }

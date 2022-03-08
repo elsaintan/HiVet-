@@ -1,5 +1,7 @@
 package com.seaid.hivetforvet
 
+import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -49,6 +51,25 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, KonsultasiActivity::class.java))
         }
 
+        mBinding.bBooking.setOnClickListener {
+            startActivity(Intent(this, AddJadwalPraktikActivity::class.java))
+        }
+
+        mBinding.imageSetting.setOnClickListener{
+            val context: Context = this
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("Alert!")
+            .setMessage("Akhiri konsultasi")
+            .setCancelable(true)
+            .setPositiveButton("Yes"){dialogInterface,it ->
+                startActivity(Intent(this, RiwayatKonsulActivity::class.java))
+            }
+            .setNegativeButton("No"){dialogInterface,it ->
+                dialogInterface.cancel()
+            }
+            val alert : AlertDialog = builder.create()
+            alert.show()
+        }
     }
 
     private fun setUser(uId: String) {

@@ -53,8 +53,8 @@ class UserProfileActivity : AppCompatActivity() {
                     binding.userSTRtv.text = user.STR
                     binding.userSIPtv.text = user.SIP
                     binding.userWprkExpTV.text = user.WorkExp
-                    if (user!!.photoProfile == ""){
-                        binding.profileIM.setImageResource(R.drawable.profile)
+                    if (user!!.photoProfile == "" || user.photoProfile == null){
+                        //binding.profileIM.setImageResource(R.drawable.profile)
                     }else{
                         Glide.with(this).load(user!!.photoProfile).into(binding.profileIM)
                     }

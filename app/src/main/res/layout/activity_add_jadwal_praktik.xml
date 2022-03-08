@@ -35,7 +35,7 @@
                 />
 
             <TextView
-                android:id="@+id/userSIPtv"
+                android:id="@+id/usernametv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
@@ -43,7 +43,7 @@
                 android:text="Nama" />
 
             <TextView
-                android:id="@+id/kontakUserTV"
+                android:id="@+id/tempatpraktikTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
@@ -51,7 +51,7 @@
                 android:text="Tempat Praktik" />
 
             <TextView
-                android:id="@+id/userWprkExpTV"
+                android:id="@+id/jampraktikTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
@@ -59,7 +59,7 @@
                 android:text="Jam Praktik" />
 
             <TextView
-                android:id="@+id/userSTRtv"
+                android:id="@+id/slottv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
@@ -67,6 +67,7 @@
                 android:text="Slot janji temu" />
 
             <Button
+                android:id="@+id/add"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
@@ -74,5 +75,14 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="30dp"
+        android:orientation="vertical"
+        android:layout_below="@id/jadwalRL"/>
 
 </RelativeLayout>
