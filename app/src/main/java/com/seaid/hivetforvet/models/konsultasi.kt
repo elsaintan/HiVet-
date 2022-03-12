@@ -1,6 +1,6 @@
 package com.seaid.hivetforvet.models
 
-class konsultasi{
+class konsultasi {
     var id : String?=null
     var id_drh : String?=null
     var id_user : String?=null
@@ -8,18 +8,18 @@ class konsultasi{
     var tanggal : String?=null
     var status : String?=null
     var id_transaction : String?=null
-    var harga : Double?=null
+    var harga : String?=null
 
     constructor()
     constructor(
-    id: String?,
-    id_drh: String?,
-    id_user: String?,
-    id_pet: String?,
-    tanggal: String?,
-    status: String?,
-    id_transaction: String?,
-    harga: Double?
+        id: String?,
+        id_drh: String?,
+        id_user: String?,
+        id_pet: String?,
+        tanggal: String?,
+        status: String?,
+        id_transaction: String?,
+        harga: String?
     ) {
         this.id = id
         this.id_drh = id_drh
@@ -30,5 +30,8 @@ class konsultasi{
         this.id_transaction = id_transaction
         this.harga = harga
     }
+
+
+
 
 }

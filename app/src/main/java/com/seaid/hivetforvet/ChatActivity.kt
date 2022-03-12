@@ -125,20 +125,16 @@ class ChatActivity : AppCompatActivity() {
 
     private fun setAkhirKonsul(idKonsul: String?) {
         val id = idKonsul
-        //mDbRef.collection("konsul").document(id.toString())
-        val id_user = intent.getStringExtra("Uid")
-        val id_pet = intent.getStringExtra("id_pet")
-        val tanggal = intent.getStringExtra("tanggal")
-        val id_transaction = intent.getStringExtra("idtransaction")
-        val harga = intent.getStringExtra("harga")
 
-        val konsultasi = konsultasi(id, mAuth!!.uid, id_user, id_pet,tanggal,"4", id_transaction, harga?.toDouble())
-        mDbRef.collection("konsultasi").document(id.toString()).set(konsultasi)
+        reference = FirebaseDatabase.getInstance().getReference("konsultasi")
+        reference!!.child(id.toString()).child("status").setValue(4)
             .addOnSuccessListener {
                 startActivity(Intent(this, RiwayatKonsulActivity::class.java))
-            }.addOnFailureListener {
-
             }
+            .addOnFailureListener {
+                throw it
+            }
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

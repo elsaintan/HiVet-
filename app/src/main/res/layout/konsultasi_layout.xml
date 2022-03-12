@@ -36,7 +36,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:text="Nama Dokterx"
+                    android:text=""
                     android:textSize="26sp"
                     app:layout_constraintStart_toEndOf="@+id/photodrh"
                     app:layout_constraintTop_toTopOf="@+id/photodrh" />
@@ -45,7 +45,7 @@
                     android:id="@+id/workexpTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Pengalaman"
+                    android:text=""
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="@+id/namedrhTV"
                     app:layout_constraintTop_toBottomOf="@+id/namedrhTV" />
@@ -54,7 +54,7 @@
                     android:id="@+id/priceTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Harga"
+                    android:text=""
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="@+id/workexpTV"
                     app:layout_constraintTop_toBottomOf="@+id/workexpTV" />

@@ -25,8 +25,10 @@ class RiwayatKonsulActivity : AppCompatActivity() {
         rbinding.recyclerView.setHasFixedSize(true)
 
         konsultasiList = arrayListOf()
-        kBerjalanAdapter = kBerjalanAdapter(konsultasiList)
+        //kBerjalanAdapter = kBerjalanAdapter(this)
         EventChangeListener()
+
+
     }
 
     private fun EventChangeListener() {
@@ -51,6 +53,7 @@ class RiwayatKonsulActivity : AppCompatActivity() {
                             }
                         }
                     }
+                    kBerjalanAdapter = kBerjalanAdapter(konsultasiList)
                     rbinding.recyclerView.adapter = kBerjalanAdapter
                     kBerjalanAdapter.notifyDataSetChanged()
                 }

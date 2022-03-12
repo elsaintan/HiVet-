@@ -1,5 +1,6 @@
 package com.seaid.hivetforvet.adapters
 
+import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -7,18 +8,27 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.*
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.firebase.database.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.seaid.hivetforvet.ChatActivity
+import com.seaid.hivetforvet.KonsultasiActivity
 import com.seaid.hivetforvet.R
+import com.seaid.hivetforvet.models.Chat
 import com.seaid.hivetforvet.models.User
 import com.seaid.hivetforvet.models.konsultasi
 import com.seaid.hivetforvet.models.peliharaan
+import com.seaid.hivetforvet.viewmodel.KonsultasiViewModel
+import kotlinx.coroutines.withContext
+import java.util.HashMap
 
-class kBerjalanAdapter (private val konsultasiList : ArrayList<konsultasi>) : RecyclerView.Adapter<kBerjalanAdapter.MyViewHolder>(){
+class kBerjalanAdapter (private val konsultasiList : ArrayList<konsultasi>) : RecyclerView.Adapter<kBerjalanAdapter.MyViewHolder>() {
 
     private lateinit var mDbRef: FirebaseFirestore
+    private lateinit var viewModel: KonsultasiViewModel
+    var reference: DatabaseReference? = null
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -31,6 +41,7 @@ class kBerjalanAdapter (private val konsultasiList : ArrayList<konsultasi>) : Re
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val konsultasi : konsultasi = konsultasiList[position]
+
         mDbRef = FirebaseFirestore.getInstance()
         val data1 = mDbRef.collection("users").document(konsultasi.id_user.toString())
         data1.get().addOnSuccessListener {
@@ -53,13 +64,11 @@ class kBerjalanAdapter (private val konsultasiList : ArrayList<konsultasi>) : Re
                 holder.namaHewan.text = pet.nama
             }
         }
+
         when(konsultasi.status){
             "1" -> holder.button.text = "Terima"
             "2" -> holder.button.text = "Menunggu Pembayaran"
             "3" -> holder.button.text = "Chat"
-            "4" -> holder.button.text = "Selesai"
-            "5" -> holder.button.text = "Ditolak"
-            "6" -> holder.button.text = "Kedaluarsa"
         }
 
         holder.button.setOnClickListener {
@@ -75,21 +84,25 @@ class kBerjalanAdapter (private val konsultasiList : ArrayList<konsultasi>) : Re
                 intent.putExtra("harga", konsultasi.harga.toString())
                 holder.itemView.context.startActivity(intent)
             }else if (holder.button.text == "Terima"){
-                changeStatus(konsultasi)
+                changeStatus(konsultasi.id.toString(), holder)
             }
 
         }
 
     }
 
-    private fun changeStatus(konsultasi: konsultasi) {
-        val konsul : konsultasi = konsultasi(konsultasi.id, konsultasi.id_drh, konsultasi.id_user, konsultasi.id_pet, konsultasi.tanggal, "2", konsultasi.id_transaction, konsultasi.harga)
-        mDbRef.collection("konsultasi").document(konsultasi.id.toString()).set(konsul)
-        
+    private fun changeStatus(id: String, holder: MyViewHolder) {
+
+        reference = FirebaseDatabase.getInstance().getReference("konsultasi")
+        reference!!.child(id).child("status").setValue("2")
+            .addOnSuccessListener {
+                holder.button.text = "Menunggu Pembayaran"
+            }
+            .addOnFailureListener {
+                throw it
+            }
+
     }
-
-
-
 
     override fun getItemCount(): Int {
         return konsultasiList.size
@@ -109,4 +122,11 @@ class kBerjalanAdapter (private val konsultasiList : ArrayList<konsultasi>) : Re
         }
 
     }
+
+    /**
+     * Returns the Lifecycle of the provider.
+     *
+     * @return The lifecycle of the provider.
+     */
+
 }

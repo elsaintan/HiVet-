@@ -1,6 +1,7 @@
 package com.seaid.hivetforvet.models
 
 class Vet {
+    var id: String? = null
     var Name: String? = null
     var Contact: String? = null
     var uid: String? = null
@@ -12,10 +13,13 @@ class Vet {
     var booking : String?=null
     var tempat : String?=null
     var WorkExp : String ?= null
+    var alamat : String ?= null
+    var harga: String ?= null
 
     constructor()
 
-    constructor(Name: String?, Contact: String?, uid: String?, photoProfile: String?, email: String?, SIP: String?, STR: String?, konsultasi: String?, booking: String?, tempat:String?, WorkExp: String?) {
+    constructor(id: String?, Name: String?, Contact: String?, uid: String?, photoProfile: String?, email: String?, SIP: String?, STR: String?, konsultasi: String?, booking: String?, tempat:String?, alamat:String?, WorkExp: String?, harga:String?) {
+        this.id = id
         this.Name = Name
         this.Contact = Contact
         this.uid = uid
@@ -27,6 +31,8 @@ class Vet {
         this.booking = booking
         this.tempat = tempat
         this.WorkExp = WorkExp
+        this.harga = harga
+        this.alamat = alamat
     }
 
 
