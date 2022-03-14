@@ -5,11 +5,13 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -67,6 +69,13 @@ class ChatActivity : AppCompatActivity() {
 
         val userid = intent.getStringExtra("Uid")
         val idKonsul = intent.getStringExtra("id")
+        val type = intent.getStringExtra("type")
+
+        if (type === "0"){
+            userMessageInput.visibility = View.GONE
+            sendMessage.visibility = View.GONE
+        }
+
         konsul.text = idKonsul
         mAuth = FirebaseAuth.getInstance().currentUser
         reference = FirebaseDatabase.getInstance().getReference("users").child(userid.toString())

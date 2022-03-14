@@ -56,19 +56,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         mBinding.imageSetting.setOnClickListener{
-            val context: Context = this
-        val builder = AlertDialog.Builder(context)
-        builder.setTitle("Alert!")
-            .setMessage("Akhiri konsultasi")
-            .setCancelable(true)
-            .setPositiveButton("Yes"){dialogInterface,it ->
-                startActivity(Intent(this, RiwayatKonsulActivity::class.java))
-            }
-            .setNegativeButton("No"){dialogInterface,it ->
-                dialogInterface.cancel()
-            }
-            val alert : AlertDialog = builder.create()
-            alert.show()
+            startActivity(Intent(this, RiwayatKonsulActivity::class.java))
         }
     }
 

@@ -69,6 +69,9 @@ class kBerjalanAdapter (private val konsultasiList : ArrayList<konsultasi>) : Re
             "1" -> holder.button.text = "Terima"
             "2" -> holder.button.text = "Menunggu Pembayaran"
             "3" -> holder.button.text = "Chat"
+            "4" -> holder.button.text = "Selesai"
+            "5" -> holder.button.text = "Ditolak"
+            "6" -> holder.button.text = "Kadaluwarsa"
         }
 
         holder.button.setOnClickListener {
@@ -85,6 +88,16 @@ class kBerjalanAdapter (private val konsultasiList : ArrayList<konsultasi>) : Re
                 holder.itemView.context.startActivity(intent)
             }else if (holder.button.text == "Terima"){
                 changeStatus(konsultasi.id.toString(), holder)
+            }else if(holder.button.text == "Selesai"){
+                val intent = Intent(holder.itemView.context, ChatActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                intent.putExtra("Uid", konsultasi.id_user)
+                intent.putExtra("type", "0")
+                intent.putExtra("id", konsultasi.id)
+                intent.putExtra("idpet", konsultasi.id_pet)
+                intent.putExtra("tanggal", konsultasi.tanggal)
+                intent.putExtra("idtransaction", konsultasi.id_transaction)
+                intent.putExtra("harga", konsultasi.harga.toString())
             }
 
         }

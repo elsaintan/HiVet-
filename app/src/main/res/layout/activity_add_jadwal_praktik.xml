@@ -50,7 +50,7 @@
                 android:layout_marginTop="24dp"
                 android:text="Tempat Praktik" />
 
-            <TextView
+            <EditText
                 android:id="@+id/jampraktikTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
                 android:layout_marginTop="24dp"
                 android:text="Jam Praktik" />
 
-            <TextView
+            <EditText
                 android:id="@+id/slottv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -77,12 +77,13 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/jadwalRL"
         android:layout_marginStart="40dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="30dp"
-        android:orientation="vertical"
-        android:layout_below="@id/jadwalRL"/>
+        android:orientation="vertical" />
 
 </RelativeLayout>

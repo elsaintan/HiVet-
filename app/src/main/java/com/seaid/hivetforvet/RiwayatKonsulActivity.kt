@@ -4,6 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.*
 import com.seaid.hivetforvet.adapters.kBerjalanAdapter
 import com.seaid.hivetforvet.databinding.ActivityRiwayatKonsulBinding
@@ -24,7 +28,12 @@ class RiwayatKonsulActivity : AppCompatActivity() {
         rbinding.recyclerView.layoutManager = LinearLayoutManager(this)
         rbinding.recyclerView.setHasFixedSize(true)
 
+
+
         konsultasiList = arrayListOf()
+        kBerjalanAdapter = kBerjalanAdapter(konsultasiList)
+
+
         //kBerjalanAdapter = kBerjalanAdapter(this)
         EventChangeListener()
 
@@ -32,31 +41,26 @@ class RiwayatKonsulActivity : AppCompatActivity() {
     }
 
     private fun EventChangeListener() {
-        db = FirebaseFirestore.getInstance()
-        db.collection("konsultasi")
-            .addSnapshotListener(object : EventListener<QuerySnapshot> {
-                override fun onEvent(
-                    value: QuerySnapshot?,
-                    error: FirebaseFirestoreException?
-                ){
-                    if (error != null){
-                        Log.e("Error: ", error.message.toString())
-                        return
-                    }
+        val reference = FirebaseDatabase.getInstance().getReference("konsultasi")
 
-                    var listkonsul = ArrayList<konsultasi>()
-                    for (dc : DocumentChange in value?.documentChanges!!){
-                        if (dc.type == DocumentChange.Type.ADDED){
-                            val data: konsultasi = dc.document.toObject(konsultasi::class.java)
-                            if (data.status!!.equals("4") || data.status.equals("5") || data.status.equals("6")) {
-                                konsultasiList.add(dc.document.toObject(konsultasi::class.java))
-                            }
-                        }
+        reference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                konsultasiList.clear()
+                for (snapshot in snapshot.children) {
+                    val data: konsultasi? = snapshot.getValue(konsultasi::class.java)
+                    if (data?.status!!.equals("4") || data.status.equals("5") || data.status.equals("6")) {
+                        konsultasiList.add(data)
+                        //Toast.makeText(this@KonsultasiActivity, "ADA DATANYA", Toast.LENGTH_SHORT).show()
                     }
-                    kBerjalanAdapter = kBerjalanAdapter(konsultasiList)
                     rbinding.recyclerView.adapter = kBerjalanAdapter
-                    kBerjalanAdapter.notifyDataSetChanged()
                 }
-            })
+                kBerjalanAdapter.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                throw error.toException();
+            }
+        })
+
     }
 }
