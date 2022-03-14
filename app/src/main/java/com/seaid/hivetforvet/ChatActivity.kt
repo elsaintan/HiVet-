@@ -134,9 +134,9 @@ class ChatActivity : AppCompatActivity() {
 
     private fun setAkhirKonsul(idKonsul: String?) {
         val id = idKonsul
-
+        val status = "4"
         reference = FirebaseDatabase.getInstance().getReference("konsultasi")
-        reference!!.child(id.toString()).child("status").setValue(4)
+        reference!!.child(id.toString()).child("status").setValue(status)
             .addOnSuccessListener {
                 startActivity(Intent(this, RiwayatKonsulActivity::class.java))
             }
