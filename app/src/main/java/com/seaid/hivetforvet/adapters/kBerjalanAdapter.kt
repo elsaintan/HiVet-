@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.*
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -96,8 +97,7 @@ class kBerjalanAdapter (private val konsultasiList : ArrayList<konsultasi>) : Re
                 intent.putExtra("id", konsultasi.id)
                 intent.putExtra("idpet", konsultasi.id_pet)
                 intent.putExtra("tanggal", konsultasi.tanggal)
-                intent.putExtra("idtransaction", konsultasi.id_transaction)
-                intent.putExtra("harga", konsultasi.harga.toString())
+                holder.itemView.context.startActivity(intent)
             }
 
         }

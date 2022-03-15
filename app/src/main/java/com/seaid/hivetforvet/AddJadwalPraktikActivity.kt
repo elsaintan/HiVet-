@@ -55,8 +55,9 @@ class AddJadwalPraktikActivity : AppCompatActivity() {
                 val items = data.size
                 if (items > 0){
                     for (item in data){
-                        janjiTemuList.add(item)
-
+                        if(item.drh_id == mAuth.uid){
+                            janjiTemuList.add(item)
+                        }
                     }
                     abinding.recyclerView.adapter = adapter
                     adapter.notifyDataSetChanged()

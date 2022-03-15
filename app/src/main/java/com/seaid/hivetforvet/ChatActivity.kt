@@ -71,9 +71,10 @@ class ChatActivity : AppCompatActivity() {
         val idKonsul = intent.getStringExtra("id")
         val type = intent.getStringExtra("type")
 
-        if (type === "0"){
+        if (type == "0"){
             userMessageInput.visibility = View.GONE
             sendMessage.visibility = View.GONE
+            end.visibility = View.GONE
         }
 
         konsul.text = idKonsul
