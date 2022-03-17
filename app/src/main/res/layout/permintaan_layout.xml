@@ -79,7 +79,7 @@
                     android:layout_marginEnd="150dp"
                     android:backgroundTint="@color/green_terang"
                     android:fontFamily="@font/roboto_bold"
-                    android:text="Tolk"
+                    android:text="Tolak"
                     android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
