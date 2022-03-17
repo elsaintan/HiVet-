@@ -28,9 +28,10 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_foto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp">
+        android:layout_marginTop="20dp">
 
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
@@ -54,8 +55,9 @@
         android:id="@+id/userRL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/layout_foto"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="30dp"
         android:background="@drawable/kotak_profil_dokter"
         android:orientation="vertical">
@@ -89,6 +91,15 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/label_SIP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="SIP" />
+
+            <TextView
                 android:id="@+id/userSIPtv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -96,43 +107,88 @@
                 android:text="SIP" />
 
             <TextView
-                android:id="@+id/kontakUserTV"
+                android:id="@+id/label_kontak"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
                 android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/roboto_bold"
                 android:text="Kontak" />
+
+            <TextView
+                android:id="@+id/kontakUserTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:text="Kontak" />
+
+            <TextView
+                android:id="@+id/label_pengalaman_kerja"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="Pengalaman Kerja" />
 
             <TextView
                 android:id="@+id/userWprkExpTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
-                android:layout_marginTop="24dp"
                 android:text="Pengalaman Kerja" />
+
+            <TextView
+                android:id="@+id/label_STR"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="STR" />
 
             <TextView
                 android:id="@+id/userSTRtv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
-                android:layout_marginTop="24dp"
                 android:text="STR" />
+
+            <TextView
+                android:id="@+id/label_praktik"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="Praktik" />
 
             <TextView
                 android:id="@+id/userPraktikTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
-                android:layout_marginTop="24dp"
                 android:text="Praktik" />
+
+            <TextView
+                android:id="@+id/label_nama_bawah"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="Nama" />
 
             <TextView
                 android:id="@+id/userNameTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
-                android:layout_marginTop="24dp"
                 android:text="Nama" />
         </LinearLayout>
 

@@ -14,6 +14,7 @@ import com.seaid.hivetforvet.databinding.ActivityAddJadwalPraktikBinding
 import com.seaid.hivetforvet.models.JanjiTemu
 import com.seaid.hivetforvet.models.Vet
 import com.seaid.hivetforvet.models.konsultasi
+import com.seaid.hivetforvet.utils.SpacingItemDecorator
 
 class AddJadwalPraktikActivity : AppCompatActivity() {
 
@@ -33,11 +34,11 @@ class AddJadwalPraktikActivity : AppCompatActivity() {
         db = FirebaseFirestore.getInstance()
 
         abinding.recyclerView.layoutManager = LinearLayoutManager(this)
-        abinding.recyclerView.setHasFixedSize(true)
+        abinding.recyclerView.setHasFixedSize(false)
         janjiTemuList = arrayListOf()
         adapter = JanjitemuAdapter(janjiTemuList)
         EventChangeListener()
-
+        abinding.recyclerView.addItemDecoration(SpacingItemDecorator(16))
         abinding.add.setOnClickListener {
             saveData()
         }
