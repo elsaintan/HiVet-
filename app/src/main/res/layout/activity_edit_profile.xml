@@ -78,32 +78,35 @@
             android:paddingLeft="8dp"
             android:text="Praktik" />
 
-        <TextView
+        <EditText
             android:id="@+id/userSTRtv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/userPraktikTV"
             android:layout_marginTop="15dp"
-            android:fontFamily="@font/roboto_bold"
-            android:text="STR" />
+            android:background="@drawable/kotak_input_putih"
+            android:text="STR"
+            android:editable="false"/>
 
-        <TextView
+        <EditText
             android:id="@+id/userSIPtv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/userSTRtv"
             android:layout_marginTop="15dp"
-            android:fontFamily="@font/roboto_bold"
-            android:text="SIP" />
+            android:background="@drawable/kotak_input_putih"
+            android:text="SIP"
+            android:editable="false"/>
 
-        <TextView
+        <EditText
             android:id="@+id/userWprkExpTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/userSIPtv"
             android:layout_marginTop="15dp"
-            android:fontFamily="@font/roboto_bold"
-            android:text="Pengalaman Kerja" />
+            android:background="@drawable/kotak_input_putih"
+            android:text="Pengalaman Kerja"
+            android:editable="false"/>
 
 
     </RelativeLayout>

@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/biru_lebih_keren"
-    android:backgroundTint="@color/biru_lebih_keren"
-    tools:context=".AddJadwalPraktikActivity">
+    tools:context=".TarikSaldoFragment">
 
     <LinearLayout
         android:id="@+id/jadwalRL"
@@ -22,17 +19,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/constraintlayout2"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="15dp"
             android:layout_marginBottom="32dp"
             android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
-                android:text="Rincian Jadwal Praktik Dokter"
-                android:textSize="18sp"
-                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/label_nama"
@@ -41,17 +30,16 @@
                 android:layout_marginLeft="24dp"
                 android:layout_marginTop="24dp"
                 android:fontFamily="@font/roboto_bold"
-                android:text="Nama"
+                android:text="Jumlah Penarikan"
                 android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/usernametv"
+            <EditText
+                android:id="@+id/jumlahtv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
                 android:layout_marginTop="8dp"
-                android:text="Nama"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
 
             <TextView
                 android:id="@+id/textView2"
@@ -60,28 +48,46 @@
                 android:layout_marginLeft="24dp"
                 android:layout_marginTop="24dp"
                 android:fontFamily="@font/roboto_bold"
-                android:text="Tempat Praktik"
+                android:text="Tarik Ke"
                 android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/tempatpraktikTV"
+            <EditText
+                android:id="@+id/tarikTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
                 android:layout_marginTop="8dp"
-                android:text="Tempat Praktik"
                 android:textSize="18sp" />
 
-            <EditText
-                android:id="@+id/jampraktikTV"
+            <TextView
+                android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
                 android:layout_marginTop="24dp"
-                android:hint="Jam Praktik" />
+                android:fontFamily="@font/roboto_bold"
+                android:text="Atas Nama"
+                android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/slottv"
+                android:id="@+id/namaTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="24dp" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="No Rek"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/norektv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
@@ -93,20 +99,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="Add Jadwal" />
+                android:text="Tarik Saldo" />
         </LinearLayout>
 
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/jadwalRL"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginBottom="30dp"
-        android:orientation="vertical" />
-
-</RelativeLayout>
+</FrameLayout>

@@ -1,5 +1,7 @@
 package com.seaid.hivetforvet
 
+import android.R
+import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +17,9 @@ import com.seaid.hivetforvet.models.JanjiTemu
 import com.seaid.hivetforvet.models.Vet
 import com.seaid.hivetforvet.models.konsultasi
 import com.seaid.hivetforvet.utils.SpacingItemDecorator
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class AddJadwalPraktikActivity : AppCompatActivity() {
 
@@ -23,6 +28,7 @@ class AddJadwalPraktikActivity : AppCompatActivity() {
     private lateinit var db : FirebaseFirestore
     private lateinit var janjiTemuList: ArrayList<JanjiTemu>
     private lateinit var adapter: JanjitemuAdapter
+    private var formatDate = SimpleDateFormat("dd MMMM yyyy", Locale.US)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +45,22 @@ class AddJadwalPraktikActivity : AppCompatActivity() {
         adapter = JanjitemuAdapter(janjiTemuList)
         EventChangeListener()
         abinding.recyclerView.addItemDecoration(SpacingItemDecorator(16))
+
+        abinding.jampraktikTV.setOnClickListener {
+            val getData : Calendar = Calendar.getInstance()
+            val datePicker = DatePickerDialog(this, R.style.Theme_Holo_Light_Dialog_MinWidth,
+                DatePickerDialog.OnDateSetListener { datePicker, i, i2, i3 ->
+                    val selectDate : Calendar = Calendar.getInstance()
+                    selectDate.set(Calendar.YEAR, i)
+                    selectDate.set(Calendar.MONTH, i2)
+                    selectDate.set(Calendar.DAY_OF_MONTH, i3)
+                    val date = formatDate.format(selectDate.time)
+                    abinding.jampraktikTV.setText(date)
+                    //Toast.makeText(this, "Date "+date, Toast.LENGTH_SHORT).show()
+                }, getData.get(Calendar.YEAR), getData.get(Calendar.MONTH), getData.get(Calendar.DAY_OF_MONTH))
+            datePicker.show()
+        }
+
         abinding.add.setOnClickListener {
             saveData()
         }
@@ -74,7 +96,8 @@ class AddJadwalPraktikActivity : AppCompatActivity() {
                 val user = doc.toObject(Vet::class.java)
                 abinding.usernametv.text = user!!.Name
                 abinding.tempatpraktikTV.text = user!!.tempat
-                //abinding.jampraktikTV.text = user!!.
+                abinding.jampraktikTV.setText(user!!.booking)
+                abinding.slottv.setText(user!!.status)
                 //Toast.makeText(this, "{$user.name}", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(this, "No such document", Toast.LENGTH_SHORT).show()
@@ -85,10 +108,13 @@ class AddJadwalPraktikActivity : AppCompatActivity() {
     }
 
     private fun saveData() {
+        val date = abinding.jampraktikTV.text
+        val slot = abinding.slottv.text
        db.collection("drh").document(mAuth.currentUser!!.uid)
-        .update("status", abinding.jampraktikTV.text)
+        .update("status", slot.toString(),
+        "booking", date.toString())
             .addOnSuccessListener {
-                Toast.makeText(this, "Berhasil", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Berhasil Mengubah Jadwal", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener {
                 throw it

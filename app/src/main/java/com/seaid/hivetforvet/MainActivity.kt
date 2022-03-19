@@ -58,6 +58,10 @@ class MainActivity : AppCompatActivity() {
         mBinding.imageSetting.setOnClickListener{
             startActivity(Intent(this, RiwayatKonsulActivity::class.java))
         }
+
+        mBinding.imageHome.setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+        }
     }
 
     private fun setUser(uId: String) {

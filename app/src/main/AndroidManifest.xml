@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HiVetForVet">
         <activity
+            android:name=".SaldoActivity"
+            android:exported="false" />
+        <activity
             android:name=".RiwayatKonsulActivity"
             android:exported="false" />
         <activity

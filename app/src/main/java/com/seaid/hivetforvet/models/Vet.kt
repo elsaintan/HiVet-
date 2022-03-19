@@ -15,10 +15,11 @@ class Vet {
     var WorkExp : String ?= null
     var alamat : String ?= null
     var harga: String ?= null
+    var status: String ?=null
 
     constructor()
 
-    constructor(id: String?, Name: String?, Contact: String?, uid: String?, photoProfile: String?, email: String?, SIP: String?, STR: String?, konsultasi: String?, booking: String?, tempat:String?, alamat:String?, WorkExp: String?, harga:String?) {
+    constructor(id: String?, Name: String?, Contact: String?, uid: String?, photoProfile: String?, email: String?, SIP: String?, STR: String?, konsultasi: String?, booking: String?, tempat:String?, alamat:String?, WorkExp: String?, harga:String?, status: String?) {
         this.id = id
         this.Name = Name
         this.Contact = Contact
@@ -33,6 +34,7 @@ class Vet {
         this.WorkExp = WorkExp
         this.harga = harga
         this.alamat = alamat
+        this.status = status
     }
 
 

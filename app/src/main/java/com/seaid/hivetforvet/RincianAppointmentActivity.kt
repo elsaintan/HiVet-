@@ -28,7 +28,7 @@ class RincianAppointmentActivity : AppCompatActivity() {
 
     private fun showData(id: String?) {
         db = FirebaseFirestore.getInstance()
-        db.collection("drh").document(id.toString())
+        db.collection("booking_appointments").document(id.toString())
             .get()
             .addOnSuccessListener {
                 if(it != null){
