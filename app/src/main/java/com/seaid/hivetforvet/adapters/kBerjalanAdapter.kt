@@ -75,6 +75,10 @@ class kBerjalanAdapter (private val konsultasiList : ArrayList<konsultasi>) : Re
             "6" -> holder.button.text = "Kadaluwarsa"
         }
 
+        if (konsultasi.status == "1"){
+            holder.tolak.visibility = View.VISIBLE
+        }
+
         holder.button.setOnClickListener {
             if (holder.button.text == "Chat"){
                 val intent = Intent(holder.itemView.context, ChatActivity::class.java)
@@ -88,7 +92,7 @@ class kBerjalanAdapter (private val konsultasiList : ArrayList<konsultasi>) : Re
                 intent.putExtra("harga", konsultasi.harga.toString())
                 holder.itemView.context.startActivity(intent)
             }else if (holder.button.text == "Terima"){
-                changeStatus(konsultasi.id.toString(), holder)
+                changeStatus(konsultasi.id.toString(), holder, "2")
             }else if(holder.button.text == "Selesai"){
                 val intent = Intent(holder.itemView.context, ChatActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -102,12 +106,16 @@ class kBerjalanAdapter (private val konsultasiList : ArrayList<konsultasi>) : Re
 
         }
 
+        holder.tolak.setOnClickListener {
+            changeStatus(konsultasi.id.toString(), holder, "5")
+        }
+
     }
 
-    private fun changeStatus(id: String, holder: MyViewHolder) {
+    private fun changeStatus(id: String, holder: MyViewHolder, status: String) {
 
         reference = FirebaseDatabase.getInstance().getReference("konsultasi")
-        reference!!.child(id).child("status").setValue("2")
+        reference!!.child(id).child("status").setValue(status)
             .addOnSuccessListener {
                 holder.button.text = "Menunggu Pembayaran"
             }
@@ -128,6 +136,7 @@ class kBerjalanAdapter (private val konsultasiList : ArrayList<konsultasi>) : Re
         val jenisHewan : TextView = itemView.findViewById(R.id.workexpTV)
         val namaHewan : TextView = itemView.findViewById(R.id.priceTV)
         val button : Button = itemView.findViewById(R.id.konsulbt)
+        val tolak : Button = itemView.findViewById(R.id.tolakbt)
 
 
         override fun onClick(v: View?) {

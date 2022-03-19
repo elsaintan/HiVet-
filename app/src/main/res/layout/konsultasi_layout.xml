@@ -66,11 +66,27 @@
                     android:layout_marginEnd="16dp"
                     android:backgroundTint="@color/green_terang"
                     android:fontFamily="@font/roboto_bold"
-                    android:text="Konsultasi"
+                    android:text="Terima"
                     android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/photodrh" />
+
+                <Button
+                    android:id="@+id/tolakbt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="150dp"
+                    android:backgroundTint="@color/green_terang"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="Tolak"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/photodrh"
+                    android:visibility="gone"/>
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
