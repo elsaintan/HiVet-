@@ -62,6 +62,10 @@ class MainActivity : AppCompatActivity() {
         mBinding.imageHome.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
         }
+
+        mBinding.tariksaldo.setOnClickListener {
+            startActivity(Intent(this, SaldoActivity::class.java))
+        }
     }
 
     private fun setUser(uId: String) {
