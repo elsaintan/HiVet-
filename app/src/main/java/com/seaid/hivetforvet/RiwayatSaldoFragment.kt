@@ -5,28 +5,23 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.seaid.hivetforvet.adapters.SaldoAdapter
+import com.seaid.hivetforvet.models.Saldo
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [RiwayatSaldoFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class RiwayatSaldoFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class RiwayatSaldoFragment : Fragment(){
+
+    private lateinit var saldoList: ArrayList<Saldo>
+    private lateinit var adapter: SaldoAdapter
+    private lateinit var db : FirebaseFirestore
+    private lateinit var mAuth : FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
@@ -34,26 +29,33 @@ class RiwayatSaldoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_riwayat_saldo, container, false)
-    }
+        val fgv2 = inflater.inflate(R.layout.fragment_riwayat_saldo, container, false)
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RiwayatSaldoFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RiwayatSaldoFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        val recyclerView : RecyclerView = fgv2.findViewById(R.id.recyclerView)
+        recyclerView.setHasFixedSize(true)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        saldoList = arrayListOf()
+        adapter = SaldoAdapter(saldoList)
+
+        db = FirebaseFirestore.getInstance()
+        db.collection("saldo")
+            .get()
+            .addOnSuccessListener {
+                val data = it.toObjects(Saldo::class.java)
+                val items = data.size
+                if (items > 0){
+                    for (item in data){
+                        if (item.id_drh == mAuth.currentUser!!.uid){
+                            saldoList.add(item)
+                        }
+                    }
+                    recyclerView.adapter = adapter
+                    adapter.notifyDataSetChanged()
                 }
             }
+
+        return fgv2
     }
+
+
 }
