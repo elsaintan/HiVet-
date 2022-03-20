@@ -77,10 +77,7 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        counter ++
-        if (counter == 1){
-            startActivity(Intent(this, UserProfileActivity::class.java))
-        }
+        super.onBackPressed()
     }
 
     private fun chooseImage(){

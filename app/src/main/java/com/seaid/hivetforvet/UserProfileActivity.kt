@@ -41,6 +41,10 @@ class UserProfileActivity : AppCompatActivity() {
 
         }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+    }
+
     private fun loadProfile(id : String) {
             val uidRef  = mDbRef.collection("drh").document(id)
 

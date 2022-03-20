@@ -19,6 +19,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mAuth : FirebaseAuth
     private lateinit var mDbRef : FirebaseFirestore
 
+    private var backPressedTime = 0L
+
     companion object {
         private const val CAMERA_PERMISSION_CODE = 100
         private const val STORAGE_PERMISSION_CODE = 101
@@ -66,6 +68,16 @@ class MainActivity : AppCompatActivity() {
         mBinding.tariksaldo.setOnClickListener {
             startActivity(Intent(this, SaldoActivity::class.java))
         }
+    }
+
+    override fun onBackPressed() {
+        if(backPressedTime + 2000 > System.currentTimeMillis()){
+            super.onBackPressed()
+        }else{
+            Toast.makeText(this, "Press back again to exit app", Toast.LENGTH_SHORT).show()
+        }
+
+        backPressedTime = System.currentTimeMillis()
     }
 
     private fun setUser(uId: String) {
