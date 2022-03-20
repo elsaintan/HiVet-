@@ -6,10 +6,51 @@
     android:layout_height="match_parent"
     tools:context=".SaldoActivity">
 
+    <RelativeLayout
+        android:id="@+id/info_saldo"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <RelativeLayout
+            android:id="@+id/kotak"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginBottom="36dp"
+            android:background="@drawable/kotak_biru_agak_melengkung"
+            android:backgroundTint="@color/biru_keren">
+
+            <TextView
+                android:id="@+id/label_jumlah_saldo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="24dp"
+                android:text="Jumlah Saldo"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/saldoTv"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/label_jumlah_saldo"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="16dp"
+                android:text="Rp5.juta"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </RelativeLayout>
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/info_saldo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -22,7 +63,7 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/tab_layout" />
 
 </RelativeLayout>

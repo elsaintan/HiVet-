@@ -129,10 +129,11 @@
                             android:id="@+id/tariksaldo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Tarik saldo"
                             android:layout_marginEnd="16dp"
+                            android:text="Tarik saldo"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            tools:layout_editor_absoluteY="25dp" />
+                            app:layout_constraintTop_toTopOf="parent" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
