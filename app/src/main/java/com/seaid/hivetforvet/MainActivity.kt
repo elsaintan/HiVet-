@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.seaid.hivetforvet.databinding.ActivityMainBinding
+import com.seaid.hivetforvet.models.Saldo
 import com.seaid.hivetforvet.models.Vet
 
 class MainActivity : AppCompatActivity() {
@@ -38,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         val uId = mAuth.currentUser!!.uid
 
         setUser(uId)
+        hitungSaldo()
 
         mBinding.imageLogout.setOnClickListener {
             mAuth.signOut()
@@ -78,6 +80,25 @@ class MainActivity : AppCompatActivity() {
         }
 
         backPressedTime = System.currentTimeMillis()
+    }
+
+    private fun hitungSaldo() {
+        var saldo = 0
+        mDbRef = FirebaseFirestore.getInstance()
+        mDbRef.collection("saldo")
+            .get()
+            .addOnSuccessListener {
+                val data = it.toObjects(Saldo::class.java)
+                val items = data.size
+                if (items > 0) {
+                    for (item in data) {
+                        if (item.id_drh == mAuth.currentUser!!.uid) {
+                            saldo += item.jumlah!!.toDouble().toInt()
+                        }
+                    }
+                }
+                mBinding.labelSaldo.text = "Rp $saldo"
+            }
     }
 
     private fun setUser(uId: String) {

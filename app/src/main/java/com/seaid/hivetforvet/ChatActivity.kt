@@ -133,6 +133,10 @@ class ChatActivity : AppCompatActivity() {
 
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+    }
+
     private fun setAkhirKonsul(idKonsul: String?) {
         val id = idKonsul
         val status = "4"
