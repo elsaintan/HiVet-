@@ -130,6 +130,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="16dp"
+                            android:backgroundTint="@color/green_terang"
                             android:text="Tarik saldo"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -228,15 +229,15 @@
                     <ImageView
                         android:id="@+id/imageHome"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="10dp"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/bottom_btn1" />
+                        app:srcCompat="@drawable/icon_home" />
 
                     <TextView
                         android:id="@+id/textHome"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Home"
+                        android:text="Beranda"
                         android:textAlignment="center"
                         android:textColor="#676767"
                         android:textSize="12sp" />
@@ -252,8 +253,8 @@
                     <ImageView
                         android:id="@+id/imageSetting"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/bottom_btn3" />
+                        android:layout_height="35dp"
+                        app:srcCompat="@drawable/icon_history" />
 
                     <TextView
                         android:id="@+id/textSetting"
@@ -274,14 +275,14 @@
                     <ImageView
                         android:id="@+id/imageProfile"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/bottom_btn2" />
+                        android:layout_height="35dp"
+                        app:srcCompat="@drawable/icon_username" />
 
                     <TextView
                         android:id="@+id/textProfile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Profile"
+                        android:text="Profil"
                         android:textAlignment="center"
                         android:textColor="#676767"
                         android:textSize="12sp" />
@@ -296,14 +297,14 @@
                     <ImageView
                         android:id="@+id/imageLogout"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/bottom_btn2" />
+                        android:layout_height="35dp"
+                        app:srcCompat="@drawable/icon_settings" />
 
                     <TextView
                         android:id="@+id/textLogout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Log out"
+                        android:text="Keluar"
                         android:textAlignment="center"
                         android:textColor="#676767"
                         android:textSize="12sp" />
