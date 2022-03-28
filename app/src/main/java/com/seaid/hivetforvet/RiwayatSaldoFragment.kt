@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -37,6 +38,7 @@ class RiwayatSaldoFragment : Fragment(){
         saldoList = arrayListOf()
         adapter = SaldoAdapter(saldoList)
 
+        mAuth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
         db.collection("saldo")
             .get()
@@ -46,6 +48,7 @@ class RiwayatSaldoFragment : Fragment(){
                 if (items > 0){
                     for (item in data){
                         if (item.id_drh == mAuth.currentUser!!.uid){
+                            Toast.makeText(context, item.jumlah, Toast.LENGTH_SHORT).show()
                             saldoList.add(item)
                         }
                     }

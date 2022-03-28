@@ -49,6 +49,7 @@ class SaldoActivity : AppCompatActivity() {
     }
 
     private fun hitungSaldo() {
+        mAuth = FirebaseAuth.getInstance()
         var saldo = 0
         db = FirebaseFirestore.getInstance()
         db.collection("saldo")
