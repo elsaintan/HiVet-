@@ -1,9 +1,11 @@
 package com.seaid.hivetforvet
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -19,6 +21,7 @@ class RiwayatKonsulActivity : AppCompatActivity() {
     private lateinit var konsultasiList: ArrayList<konsultasi>
     private lateinit var kBerjalanAdapter: kBerjalanAdapter
     private lateinit var db : FirebaseFirestore
+    private lateinit var mAuth : FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +43,13 @@ class RiwayatKonsulActivity : AppCompatActivity() {
 
     }
 
+    override fun onBackPressed() {
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
+    }
+
     private fun EventChangeListener() {
+        mAuth = FirebaseAuth.getInstance()
         val reference = FirebaseDatabase.getInstance().getReference("konsultasi")
 
         reference.addValueEventListener(object : ValueEventListener {
@@ -48,6 +57,7 @@ class RiwayatKonsulActivity : AppCompatActivity() {
                 konsultasiList.clear()
                 for (snapshot in snapshot.children) {
                     val data: konsultasi? = snapshot.getValue(konsultasi::class.java)
+                    if (data?.id_drh == mAuth.currentUser?.uid)
                     if (data?.status!!.equals("4") || data.status.equals("5") || data.status.equals("6")) {
                         konsultasiList.add(data)
                         //Toast.makeText(this@KonsultasiActivity, "ADA DATANYA", Toast.LENGTH_SHORT).show()

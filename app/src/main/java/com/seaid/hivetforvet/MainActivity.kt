@@ -61,6 +61,7 @@ class MainActivity : AppCompatActivity() {
 
         mBinding.imageSetting.setOnClickListener{
             startActivity(Intent(this, RiwayatKonsulActivity::class.java))
+            finish()
         }
 
         mBinding.imageHome.setOnClickListener {
