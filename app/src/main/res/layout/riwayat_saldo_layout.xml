@@ -29,23 +29,26 @@
                     android:id="@+id/jenis"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_bold"
                     android:text="Jenis"
+                    android:textSize="20sp"
                     tools:ignore="MissingConstraints" />
 
                 <TextView
                     android:id="@+id/jumlahTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
                     android:text="Nama User"
                     android:textSize="20sp"
-                    app:layout_constraintTop_toBottomOf="@id/jenis"
-                    app:layout_constraintStart_toStartOf="@id/jenis"/>
+                    app:layout_constraintStart_toStartOf="@id/jenis"
+                    app:layout_constraintTop_toBottomOf="@id/jenis" />
 
                 <TextView
                     android:id="@+id/tanggalTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:text="Jenis hewan"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="@+id/jumlahTV"
@@ -55,6 +58,7 @@
                     android:id="@+id/statusTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:text="Nama hewan"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="@+id/tanggalTV"
