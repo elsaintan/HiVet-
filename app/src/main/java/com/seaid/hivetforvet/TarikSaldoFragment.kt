@@ -50,7 +50,7 @@ class TarikSaldoFragment : Fragment() {
             val current = LocalDateTime.now()
             val simpleDateFormat = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
             val tanggal = current.format(simpleDateFormat)
-            val tariksaldo = Saldo(id, mAuth.currentUser!!.uid,
+            val tariksaldo = Saldo(id, mAuth.currentUser!!.uid, "Penarikan",
                 jml.text.toString(), tarik.text.toString(), nama.text.toString(), ke.text.toString(), tanggal, "Proses"
             )
             db = FirebaseFirestore.getInstance()

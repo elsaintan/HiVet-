@@ -26,6 +26,7 @@ class SaldoAdapter(private val penarikanList: ArrayList<Saldo>) : RecyclerView.A
         holder.saldo.text = penarikan.jumlah
         holder.tanggal.text = penarikan.tanggal
         holder.status.text = "Status: " +penarikan.status
+        holder.jenis.text = penarikan.jenis
     }
 
     override fun getItemCount(): Int {
@@ -37,6 +38,7 @@ class SaldoAdapter(private val penarikanList: ArrayList<Saldo>) : RecyclerView.A
         val saldo = itemView.findViewById<TextView>(R.id.jumlahTV)
         val tanggal = itemView.findViewById<TextView>(R.id.tanggalTV)
         val status = itemView.findViewById<TextView>(R.id.statusTV)
+        val jenis = itemView.findViewById<TextView>(R.id.jenis)
 
         override fun onClick(v: View?) {
 

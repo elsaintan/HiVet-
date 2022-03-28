@@ -5,6 +5,7 @@ import java.sql.ClientInfoStatus
 class Saldo {
     var id : String ?= null
     var id_drh : String ?= null
+    var jenis:String?= null
     var jumlah : String ?= null
     var tarikKe : String ?= null
     var nama : String ?= null
@@ -17,6 +18,7 @@ class Saldo {
     constructor(
         id: String?,
         id_drh: String?,
+        jenis: String?,
         jumlah: String?,
         tarikKe: String?,
         nama: String?,
@@ -26,6 +28,7 @@ class Saldo {
     ) {
         this.id = id
         this.id_drh = id_drh
+        this.jenis = jenis
         this.jumlah = jumlah
         this.tarikKe = tarikKe
         this.nama = nama
