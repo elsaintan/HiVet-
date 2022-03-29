@@ -85,8 +85,9 @@
             android:layout_below="@id/userPraktikTV"
             android:layout_marginTop="15dp"
             android:background="@drawable/kotak_input_putih"
-            android:text="STR"
-            android:editable="false"/>
+            android:editable="false"
+            android:paddingLeft="8dp"
+            android:text="STR" />
 
         <EditText
             android:id="@+id/userSIPtv"
@@ -96,6 +97,7 @@
             android:layout_marginTop="15dp"
             android:background="@drawable/kotak_input_putih"
             android:text="SIP"
+            android:paddingLeft="8dp"
             android:editable="false"/>
 
         <EditText
@@ -106,6 +108,7 @@
             android:layout_marginTop="15dp"
             android:background="@drawable/kotak_input_putih"
             android:text="Pengalaman Kerja"
+            android:paddingLeft="8dp"
             android:editable="false"/>
 
 
