@@ -48,7 +48,6 @@ class RiwayatSaldoFragment : Fragment(){
                 if (items > 0){
                     for (item in data){
                         if (item.id_drh == mAuth.currentUser!!.uid){
-                            Toast.makeText(context, item.jumlah, Toast.LENGTH_SHORT).show()
                             saldoList.add(item)
                         }
                     }

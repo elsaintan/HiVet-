@@ -1,5 +1,6 @@
 package com.seaid.hivetforvet
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.bumptech.glide.Glide
@@ -24,6 +25,11 @@ class RincianAppointmentActivity : AppCompatActivity() {
         val id = intent.getStringExtra("id")
 
         showData(id)
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this, AddJadwalPraktikActivity::class.java))
+        finish()
     }
 
     private fun showData(id: String?) {

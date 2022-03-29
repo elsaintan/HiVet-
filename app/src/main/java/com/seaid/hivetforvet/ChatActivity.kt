@@ -134,7 +134,8 @@ class ChatActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
+        startActivity(Intent(this, RiwayatKonsulActivity::class.java))
+        finish()
     }
 
     private fun setAkhirKonsul(idKonsul: String?) {
