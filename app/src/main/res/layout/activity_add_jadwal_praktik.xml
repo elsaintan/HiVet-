@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -15,7 +15,6 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="30dp"
-        android:background="@drawable/kotak_profil_dokter"
         android:orientation="vertical">
 
         <LinearLayout
@@ -24,16 +23,18 @@
             android:layout_below="@id/constraintlayout2"
             android:layout_marginTop="32dp"
             android:layout_marginBottom="32dp"
+            android:background="@drawable/kotak_profil_dokter"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
+                android:layout_marginTop="24dp"
                 android:text="Rincian Jadwal Praktik Dokter"
-                android:textSize="20sp"
-                android:textColor="@color/black"
                 android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -41,7 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="32dp"
                 android:fontFamily="@font/roboto_bold"
                 android:text="Nama"
                 android:textSize="18sp" />
@@ -89,8 +90,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
-                android:paddingLeft="3dp"
-                android:hint="Jam Praktik" />
+                android:hint="Jam Praktik"
+                android:paddingLeft="3dp" />
 
             <TextView
                 android:id="@+id/timestartLabel"
@@ -107,8 +108,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
-                android:paddingLeft="3dp"
-                android:hint="Jam Mulai" />
+                android:hint="Jam Mulai"
+                android:paddingLeft="3dp" />
 
             <TextView
                 android:id="@+id/timesendLabel"
@@ -125,8 +126,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
-                android:paddingLeft="3dp"
-                android:hint="Jam Berakhir" />
+                android:hint="Jam Berakhir"
+                android:paddingLeft="3dp" />
 
             <TextView
                 android:id="@+id/durationLabel"
@@ -143,8 +144,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
-                android:paddingLeft="3dp"
-                android:hint="Durasi konsultasi" />
+                android:hint="Durasi konsultasi"
+                android:paddingLeft="3dp" />
 
             <TextView
                 android:id="@+id/textView4"
@@ -162,28 +163,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
-                android:paddingLeft="3dp"
-                android:hint="Slot janji temu" />
+                android:hint="Slot janji temu"
+                android:paddingLeft="3dp" />
 
             <Button
                 android:id="@+id/add"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="80dp"
                 android:layout_marginTop="24dp"
-                android:text="Add Jadwal" />
+                android:layout_marginRight="80dp"
+                android:layout_marginBottom="35dp"
+                android:text="Tambah Jadwal" />
         </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <RelativeLayout
+            android:id="@+id/spacingbawah"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+        </RelativeLayout>
 
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/jadwalRL"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginBottom="30dp"
-        android:orientation="vertical" />
-
-</RelativeLayout>
+</ScrollView>
