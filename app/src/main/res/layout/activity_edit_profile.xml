@@ -79,6 +79,17 @@
             android:text="Praktik" />
 
         <EditText
+            android:id="@+id/userdom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/kontakUserTV"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/kotak_input_putih"
+            android:minHeight="48dp"
+            android:paddingLeft="8dp"
+            android:text="Domisili" />
+
+        <EditText
             android:id="@+id/userSTRtv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

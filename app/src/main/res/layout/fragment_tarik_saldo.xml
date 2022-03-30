@@ -1,106 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".TarikSaldoFragment">
 
-    <LinearLayout
-        android:id="@+id/jadwalRL"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="30dp"
-        android:background="@drawable/kotak_profil_dokter"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/jadwalRL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/constraintlayout2"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/kotak_profil_dokter"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/label_nama"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="24dp"
-                android:fontFamily="@font/roboto_bold"
-                android:text="Jumlah Penarikan"
-                android:textSize="18sp" />
+                android:layout_below="@id/constraintlayout2"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="32dp"
+                android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/jumlahtv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="8dp"
-                android:textSize="18sp"/>
+                <TextView
+                    android:id="@+id/label_nama"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="Jumlah Penarikan"
+                    android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="24dp"
-                android:fontFamily="@font/roboto_bold"
-                android:text="Tarik Ke"
-                android:textSize="18sp" />
+                <EditText
+                    android:id="@+id/jumlahtv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="8dp"
+                    android:textSize="18sp"/>
 
-            <EditText
-                android:id="@+id/tarikTV"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="8dp"
-                android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="Tarik Ke"
+                    android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="24dp"
-                android:fontFamily="@font/roboto_bold"
-                android:text="Atas Nama"
-                android:textSize="18sp" />
+                <EditText
+                    android:id="@+id/tarikTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="8dp"
+                    android:textSize="18sp" />
 
-            <EditText
-                android:id="@+id/namaTV"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="24dp" />
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="Atas Nama"
+                    android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="24dp"
-                android:fontFamily="@font/roboto_bold"
-                android:text="No Rek"
-                android:textSize="18sp" />
+                <EditText
+                    android:id="@+id/namaTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="24dp" />
 
-            <EditText
-                android:id="@+id/norektv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="24dp"/>
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="No Rek"
+                    android:textSize="18sp" />
 
-            <Button
-                android:id="@+id/add"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="Tarik Saldo" />
+                <EditText
+                    android:id="@+id/norektv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="24dp"/>
+                <Button
+                    android:id="@+id/add"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="Tarik Saldo" />
+            </LinearLayout>
+
         </LinearLayout>
 
-    </LinearLayout>
+    </FrameLayout>
 
-</FrameLayout>
+</ScrollView>

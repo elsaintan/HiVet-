@@ -30,11 +30,6 @@ class EditProfileActivity : AppCompatActivity() {
     private var filePath : Uri? = null
     private final val PICK_IMAGE_REQUEST : Int = 2020
 
-    companion object {
-        private const val CAMERA_PERMISSION_CODE = 100
-        private const val STORAGE_PERMISSION_CODE = 101
-    }
-
     private lateinit var editBinding: ActivityEditProfileBinding
 
     private lateinit var mAuth: FirebaseUser
@@ -44,6 +39,11 @@ class EditProfileActivity : AppCompatActivity() {
 
     private var photo : String ?= null
     var counter : Int = 0
+
+    companion object {
+        private const val CAMERA_PERMISSION_CODE = 100
+        private const val STORAGE_PERMISSION_CODE = 101
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -128,6 +128,24 @@ class EditProfileActivity : AppCompatActivity() {
         val user = mDbRef.collection("users")
         user.document(mAuth.uid).set(useredit)
         startActivity(Intent(this, MainActivity::class.java))*/
+
+        val name = editBinding.userNameTV.text
+        val kontak = editBinding.kontakUserTV.text
+        val tempat = editBinding.userPraktikTV.text
+        val alanat = editBinding.userSTRtv.text
+
+        mDbRef.collection("drh").document(mAuth!!.uid)
+            .update("Name", name.toString(),
+                "Contact", kontak.toString(),
+            "tempat", tempat.toString(),
+            "alamat", alanat.toString())
+            .addOnSuccessListener {
+                Toast.makeText(this, "Berhasil Mengubah Jadwal", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener {
+                throw it
+            }
+
     }
 
     private fun showDataUser() {
@@ -142,6 +160,7 @@ class EditProfileActivity : AppCompatActivity() {
                 editBinding.userNameTV.setText(user!!.Name)
                 editBinding.kontakUserTV.setText(user!!.Contact)
                 editBinding.userPraktikTV.setText(user.tempat)
+                editBinding.userdom.setText(user.alamat)
                 editBinding.userSTRtv.setText(user.STR)
                 editBinding.userSIPtv.setText(user.SIP)
                 editBinding.userWprkExpTV.setText(user.WorkExp)
@@ -178,13 +197,13 @@ class EditProfileActivity : AppCompatActivity() {
                                             permissions: Array<String>,
                                             grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == EditProfileActivity.CAMERA_PERMISSION_CODE) {
+        if (requestCode == CAMERA_PERMISSION_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(this, "Camera Permission Granted", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(this, "Camera Permission Denied", Toast.LENGTH_SHORT).show()
             }
-        } else if (requestCode == EditProfileActivity.STORAGE_PERMISSION_CODE) {
+        } else if (requestCode == STORAGE_PERMISSION_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(this, "Storage Permission Granted", Toast.LENGTH_SHORT).show()
             } else {

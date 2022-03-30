@@ -23,7 +23,9 @@ import com.seaid.hivetforvet.models.konsultasi
 import com.seaid.hivetforvet.models.peliharaan
 import com.seaid.hivetforvet.viewmodel.KonsultasiViewModel
 import kotlinx.coroutines.withContext
-import java.util.HashMap
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class kBerjalanAdapter (private val konsultasiList : ArrayList<konsultasi>) : RecyclerView.Adapter<kBerjalanAdapter.MyViewHolder>() {
 
@@ -42,6 +44,16 @@ class kBerjalanAdapter (private val konsultasiList : ArrayList<konsultasi>) : Re
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val konsultasi : konsultasi = konsultasiList[position]
+
+        val dateInString = konsultasi.tanggal
+        if (isDateValid(dateInString.toString())){
+            changeStatus(konsultasi.id.toString(), holder, "6")
+            //holder.button.text = "Selesai"
+            //Toast.makeText(holder.itemView.context, "This is true", Toast.LENGTH_SHORT).show()
+        }else{
+            //holder.button.text = "Rincian"
+            //Toast.makeText(holder.itemView.context, "This is false", Toast.LENGTH_SHORT).show()
+        }
 
         mDbRef = FirebaseFirestore.getInstance()
         val data1 = mDbRef.collection("users").document(konsultasi.id_user.toString())
@@ -110,6 +122,15 @@ class kBerjalanAdapter (private val konsultasiList : ArrayList<konsultasi>) : Re
             changeStatus(konsultasi.id.toString(), holder, "5")
         }
 
+    }
+
+    fun isDateValid(myDate: String) : Boolean {
+        try {
+            val date = SimpleDateFormat("yyyy-MM-dd").parse(myDate)
+            return !date.before(Date())
+        } catch(ignored: java.text.ParseException) {
+            return false
+        }
     }
 
     private fun changeStatus(id: String, holder: MyViewHolder, status: String) {

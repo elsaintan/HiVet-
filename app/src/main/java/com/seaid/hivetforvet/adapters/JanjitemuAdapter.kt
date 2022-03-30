@@ -17,6 +17,9 @@ import com.seaid.hivetforvet.models.JanjiTemu
 import com.seaid.hivetforvet.models.User
 import com.seaid.hivetforvet.models.konsultasi
 import com.seaid.hivetforvet.models.peliharaan
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class JanjitemuAdapter(private val janjitemuList: ArrayList<JanjiTemu>) : RecyclerView.Adapter<JanjitemuAdapter.MyViewHolder>(){
 
@@ -34,6 +37,14 @@ class JanjitemuAdapter(private val janjitemuList: ArrayList<JanjiTemu>) : Recycl
         val data : JanjiTemu = janjitemuList[position]
 
         holder.tanggal.text = data.tanggal
+
+        val dateInString = data.tanggal
+
+        if (isDateValid(dateInString.toString())){
+            holder.button.text = "Selesai"
+        }else{
+            holder.button.text = "Rincian"
+        }
 
         mDbRef = FirebaseFirestore.getInstance()
         val data1 = mDbRef.collection("users").document(data.user_id.toString())
@@ -64,6 +75,15 @@ class JanjitemuAdapter(private val janjitemuList: ArrayList<JanjiTemu>) : Recycl
             holder.itemView.context.startActivity(intent)
         }
 
+    }
+
+    fun isDateValid(myDate: String) : Boolean {
+        try {
+            val date = SimpleDateFormat("yyyy-MM-dd").parse(myDate)
+            return !date.before(Date())
+        } catch(ignored: java.text.ParseException) {
+            return false
+        }
     }
 
     override fun getItemCount(): Int {

@@ -53,10 +53,11 @@ class UserProfileActivity : AppCompatActivity() {
                     val user = doc.toObject(Vet::class.java)
                     binding.userNameTV.text = user!!.Name
                     binding.kontakUserTV.text = user.Contact
+                    binding.userDomisiliTV.setText(user.alamat)
                     binding.userPraktikTV.text = user.tempat
                     binding.userSTRtv.text = user.STR
                     binding.userSIPtv.text = user.SIP
-                    binding.userWprkExpTV.text = user.WorkExp
+                    binding.userWprkExpTV.text = user.WorkExp+" Tahun"
                     if (user!!.photoProfile == "" || user.photoProfile == null){
                         //binding.profileIM.setImageResource(R.drawable.profile)
                     }else{
