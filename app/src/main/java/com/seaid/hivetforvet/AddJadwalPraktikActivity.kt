@@ -70,7 +70,7 @@ class AddJadwalPraktikActivity : AppCompatActivity() {
 
             TimePickerDialog(this, TimePickerDialog.OnTimeSetListener{ view, hourofDay, minute ->
                 abinding.timestartTV.setText("$hourofDay:$minute")
-            }, startHour, startMinute, false).show()
+            }, startHour, startMinute, true).show()
         }
 
         abinding.timeendtTV.setOnClickListener {
@@ -80,7 +80,7 @@ class AddJadwalPraktikActivity : AppCompatActivity() {
 
             TimePickerDialog(this, TimePickerDialog.OnTimeSetListener{ view, hourofDay, minute ->
                 abinding.timeendtTV.setText("$hourofDay:$minute")
-            }, startHour, startMinute, false).show()
+            }, startHour, startMinute, true).show()
         }
 
         abinding.add.setOnClickListener {
