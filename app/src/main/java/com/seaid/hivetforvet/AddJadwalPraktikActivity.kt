@@ -46,7 +46,10 @@ class AddJadwalPraktikActivity : AppCompatActivity() {
         janjiTemuList = arrayListOf()
         adapter = JanjitemuAdapter(janjiTemuList)
         EventChangeListener()
-        abinding.recyclerView.addItemDecoration(SpacingItemDecorator(16))
+        abinding.recyclerView.addItemDecoration(SpacingItemDecorator(120))
+
+// this might be helpful
+
 
         abinding.jampraktikTV.setOnClickListener {
             val getData : Calendar = Calendar.getInstance()
