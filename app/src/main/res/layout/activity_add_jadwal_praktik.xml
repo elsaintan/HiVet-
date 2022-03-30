@@ -81,7 +81,7 @@
                 android:layout_marginLeft="24dp"
                 android:layout_marginTop="24dp"
                 android:fontFamily="@font/roboto_bold"
-                android:text="Jam Praktik"
+                android:text="Tanggal Praktik"
                 android:textSize="18sp" />
 
             <EditText
@@ -91,6 +91,60 @@
                 android:layout_marginLeft="24dp"
                 android:paddingLeft="3dp"
                 android:hint="Jam Praktik" />
+
+            <TextView
+                android:id="@+id/timestartLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="Jam Mulai Praktik"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/timestartTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:paddingLeft="3dp"
+                android:hint="Jam Mulai" />
+
+            <TextView
+                android:id="@+id/timesendLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="Jam Berakhir Praktik"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/timeendtTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:paddingLeft="3dp"
+                android:hint="Jam Berakhir" />
+
+            <TextView
+                android:id="@+id/durationLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="Durasi Praktik"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/durationTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:paddingLeft="3dp"
+                android:hint="Durasi konsultasi" />
 
             <TextView
                 android:id="@+id/textView4"

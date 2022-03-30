@@ -2,6 +2,7 @@ package com.seaid.hivetforvet
 
 import android.R
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,13 +10,13 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 import com.google.firebase.firestore.*
 import com.seaid.hivetforvet.adapters.JanjitemuAdapter
+import com.seaid.hivetforvet.adapters.MessageAdapter
 import com.seaid.hivetforvet.adapters.kBerjalanAdapter
 import com.seaid.hivetforvet.databinding.ActivityAddJadwalPraktikBinding
-import com.seaid.hivetforvet.models.JanjiTemu
-import com.seaid.hivetforvet.models.Vet
-import com.seaid.hivetforvet.models.konsultasi
+import com.seaid.hivetforvet.models.*
 import com.seaid.hivetforvet.utils.SpacingItemDecorator
 import java.text.SimpleDateFormat
 import java.util.*
@@ -26,6 +27,7 @@ class AddJadwalPraktikActivity : AppCompatActivity() {
     private lateinit var abinding : ActivityAddJadwalPraktikBinding
     private lateinit var mAuth : FirebaseAuth
     private lateinit var db : FirebaseFirestore
+    private var reference: DatabaseReference? = null
     private lateinit var janjiTemuList: ArrayList<JanjiTemu>
     private lateinit var adapter: JanjitemuAdapter
     private var formatDate = SimpleDateFormat("dd MMMM yyyy", Locale.US)
@@ -61,6 +63,26 @@ class AddJadwalPraktikActivity : AppCompatActivity() {
             datePicker.show()
         }
 
+        abinding.timestartTV.setOnClickListener{
+            val currentTime = Calendar.getInstance()
+            val startHour = currentTime.get(Calendar.HOUR_OF_DAY)
+            val startMinute = currentTime.get(Calendar.MINUTE)
+
+            TimePickerDialog(this, TimePickerDialog.OnTimeSetListener{ view, hourofDay, minute ->
+                abinding.timestartTV.setText("$hourofDay:$minute")
+            }, startHour, startMinute, false).show()
+        }
+
+        abinding.timeendtTV.setOnClickListener {
+            val currentTime = Calendar.getInstance()
+            val startHour = currentTime.get(Calendar.HOUR_OF_DAY)
+            val startMinute = currentTime.get(Calendar.MINUTE)
+
+            TimePickerDialog(this, TimePickerDialog.OnTimeSetListener{ view, hourofDay, minute ->
+                abinding.timeendtTV.setText("$hourofDay:$minute")
+            }, startHour, startMinute, false).show()
+        }
+
         abinding.add.setOnClickListener {
             saveData()
         }
@@ -89,6 +111,25 @@ class AddJadwalPraktikActivity : AppCompatActivity() {
     }
 
     private fun showData() {
+
+        val reference = FirebaseDatabase.getInstance().getReference()
+        reference.child("janjiTemu").child(mAuth.currentUser!!.uid)
+            .addValueEventListener(object : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val data= snapshot.getValue(jadwal::class.java)
+                    if (data != null){
+                        abinding.timestartTV.setText(data!!.start)
+                        abinding.timeendtTV.setText(data!!.end)
+                        abinding.durationTV.setText(data!!.duration)
+                        abinding.slottv.setText(data!!.slot)
+                    }
+                }
+                override fun onCancelled(error: DatabaseError) {
+                    throw error.toException()
+                }
+
+            })
+
         val uidRef  = db.collection("drh").document(mAuth.currentUser!!.uid)
 
         uidRef.get().addOnSuccessListener { doc ->
@@ -110,9 +151,29 @@ class AddJadwalPraktikActivity : AppCompatActivity() {
     private fun saveData() {
         val date = abinding.jampraktikTV.text
         val slot = abinding.slottv.text
+        val start = abinding.timestartTV.text
+        val end = abinding.timeendtTV.text
+        val duration = abinding.durationTV.text
+
+        val reference = FirebaseDatabase.getInstance().getReference()
+        val hashMap = HashMap<String, Any>()
+        hashMap["id"] = mAuth.currentUser!!.uid
+        hashMap["start"] = start
+        hashMap["end"] = end
+        hashMap["duration"] = duration
+        hashMap["slot"] = slot
+
+        reference.child("janjiTemu").child(mAuth.currentUser!!.uid).setValue(hashMap)
+            .addOnSuccessListener {
+                Toast.makeText(this, "Berhasil Mengubah Jadwal", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, " "+it, Toast.LENGTH_SHORT).show()
+            }
+
        db.collection("drh").document(mAuth.currentUser!!.uid)
-        .update("status", slot.toString(),
-        "booking", date.toString())
+        .update("booking", date.toString(),
+        "status", "1")
             .addOnSuccessListener {
                 Toast.makeText(this, "Berhasil Mengubah Jadwal", Toast.LENGTH_SHORT).show()
             }
