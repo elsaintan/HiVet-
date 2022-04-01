@@ -152,15 +152,16 @@ class AddJadwalPraktikActivity : AppCompatActivity() {
     }
 
     private fun saveData() {
-        val date = abinding.jampraktikTV.text
-        val slot = abinding.slottv.text
-        val start = abinding.timestartTV.text
-        val end = abinding.timeendtTV.text
-        val duration = abinding.durationTV.text
+        val id : String = mAuth.currentUser?.uid.toString()
+        val date : String = abinding.jampraktikTV.text.toString()
+        val slot : String = abinding.slottv.text.toString()
+        val start : String = abinding.timestartTV.text.toString()
+        val end : String = abinding.timeendtTV.text.toString()
+        val duration : String = abinding.durationTV.text.toString()
 
         val reference = FirebaseDatabase.getInstance().getReference()
         val hashMap = HashMap<String, Any>()
-        hashMap["id"] = mAuth.currentUser!!.uid
+        hashMap["id"] = id
         hashMap["start"] = start
         hashMap["end"] = end
         hashMap["duration"] = duration
