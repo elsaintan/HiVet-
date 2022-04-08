@@ -5,8 +5,11 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
@@ -86,12 +89,57 @@ class AddJadwalPraktikActivity : AppCompatActivity() {
             }, startHour, startMinute, true).show()
         }
 
+        abinding.durationTV.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (s?.length != 0){
+                    time()
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                //time()
+            }
+
+        })
+
         abinding.add.setOnClickListener {
             saveData()
         }
 
+
         showData()
 
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+    }
+
+    private fun time(){
+        val start = abinding.timestartTV.text
+        val end = abinding.timeendtTV.text
+        val duration = abinding.durationTV.text
+        val akhir = Integer.parseInt(duration.toString())
+
+        val df = SimpleDateFormat("HH:mm")
+        val d: Date = df.parse(start.toString())
+        val s: Date = df.parse(end.toString())
+        val cal: Calendar = Calendar.getInstance()
+        var x = d
+        var slot : Int = 0
+
+        while (x.before(s)) {
+            cal.setTime(x)
+            cal.add(Calendar.MINUTE, akhir)
+            val y = df.format(cal.getTime())
+            x = df.parse(y)
+            slot += 1
+        }
+
+        abinding.slottv.setText(slot.toString())
     }
 
     private fun EventChangeListener() {
