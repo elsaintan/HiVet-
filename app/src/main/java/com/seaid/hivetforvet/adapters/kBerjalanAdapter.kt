@@ -61,7 +61,7 @@ class kBerjalanAdapter (private val konsultasiList : ArrayList<konsultasi>) : Re
             val user = it.toObject(User::class.java)
             if (user != null){
                 holder.nameUser.text = user.name
-                if (user.photoProfile != null){
+                if (user.photoProfile == null){
                     holder.profileUser.setImageResource(R.drawable.profile)
                 }else{
                     Glide.with(holder.itemView.context).load(user.photoProfile).into(holder.profileUser)
