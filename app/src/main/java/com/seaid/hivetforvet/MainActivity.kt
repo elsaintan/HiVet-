@@ -9,12 +9,16 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 import com.google.firebase.firestore.FirebaseFirestore
+import com.seaid.hivetforvet.adapters.kBerjalanAdapter
 import com.seaid.hivetforvet.databinding.ActivityMainBinding
 import com.seaid.hivetforvet.models.Saldo
 import com.seaid.hivetforvet.models.Vet
+import com.seaid.hivetforvet.models.konsultasi
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var mAuth : FirebaseAuth
     private lateinit var mDbRef : FirebaseFirestore
-
+    private lateinit var reference: DatabaseReference
     private var backPressedTime = 0L
 
     companion object {
@@ -74,6 +78,30 @@ class MainActivity : AppCompatActivity() {
         mBinding.tariksaldo.setOnClickListener {
             startActivity(Intent(this, SaldoActivity::class.java))
         }
+
+        listKonsul()
+    }
+
+    private fun listKonsul() {
+        val reference = FirebaseDatabase.getInstance().getReference("konsultasi")
+        var jml = 0
+
+        reference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (snapshot in snapshot.children) {
+                    val data: konsultasi? = snapshot.getValue(konsultasi::class.java)
+                    if (data?.status!!.equals("1")) {
+                        jml += 1
+                    }
+                }
+                mBinding.jmlKonsul.setText(jml.toString())
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                throw error.toException();
+            }
+        })
     }
 
     override fun onBackPressed() {

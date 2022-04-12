@@ -50,7 +50,7 @@ class RiwayatKonsulActivity : AppCompatActivity() {
 
     private fun EventChangeListener() {
         mAuth = FirebaseAuth.getInstance()
-        val reference = FirebaseDatabase.getInstance().getReference("konsultasi")
+        val reference = FirebaseDatabase.getInstance().getReference("konsultasi").orderByChild("tanggal")
 
         reference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {

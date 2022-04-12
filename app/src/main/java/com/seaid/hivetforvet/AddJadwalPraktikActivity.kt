@@ -144,7 +144,7 @@ class AddJadwalPraktikActivity : AppCompatActivity() {
 
     private fun EventChangeListener() {
         db = FirebaseFirestore.getInstance()
-        db.collection("booking_appointments")
+        db.collection("booking_appointments").orderBy("tanggal")
             .get()
             .addOnSuccessListener {
                 val data = it.toObjects(JanjiTemu::class.java)
