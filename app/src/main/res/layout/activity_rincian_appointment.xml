@@ -62,7 +62,7 @@
         <RelativeLayout
             android:id="@+id/second"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="160dp"
             android:layout_below="@id/first"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
@@ -102,10 +102,12 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/statusx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tnggalll"
                 android:layout_gravity="center_vertical"
+                android:layout_marginTop="8dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -127,28 +129,13 @@
 
             </LinearLayout>
 
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/third"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/second"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/kotak_profil_kecil"
-            android:paddingStart="16dp"
-            android:paddingTop="20dp"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="8dp">
-
             <LinearLayout
                 android:id="@+id/tempatll"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/statusx"
                 android:layout_gravity="center_vertical"
+                android:layout_marginTop="8dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -171,10 +158,12 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/alamatx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tempatll"
                 android:layout_gravity="center_vertical"
+                android:layout_marginTop="8dp"
                 android:orientation="horizontal">
 
                 <TextView
