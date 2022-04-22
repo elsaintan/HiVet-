@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/biru_lebih_keren"
     tools:context=".EditProfileActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -38,92 +42,155 @@
         </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <RelativeLayout
-        android:id="@+id/userRL"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="200dp"
-        android:layout_marginEnd="30dp">
-
-        <EditText
-            android:id="@+id/userNameTV"
+        <RelativeLayout
+            android:id="@+id/userRL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/kotak_input_putih"
-            android:hint="Masukkan nama"
-            android:minHeight="48dp"
-            android:paddingLeft="8dp"
-            android:text="Nama" />
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="200dp"
+            android:layout_marginEnd="30dp">
 
-        <EditText
-            android:id="@+id/kontakUserTV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/userNameTV"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/kotak_input_putih"
-            android:minHeight="48dp"
-            android:paddingLeft="8dp"
-            android:text="Kontak" />
+            <TextView
+                android:id="@+id/labelNama"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Nama : "
+                android:textColor="#000000"
+                android:textSize="20sp" />
 
-        <EditText
-            android:id="@+id/userPraktikTV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/kontakUserTV"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/kotak_input_putih"
-            android:minHeight="48dp"
-            android:paddingLeft="8dp"
-            android:text="Praktik" />
+            <EditText
+                android:id="@+id/userNameTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/labelNama"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/kotak_input_putih"
+                android:minHeight="48dp"
+                android:paddingLeft="8dp" />
 
-        <EditText
-            android:id="@+id/userdom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/kontakUserTV"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/kotak_input_putih"
-            android:minHeight="48dp"
-            android:paddingLeft="8dp"
-            android:text="Domisili" />
+            <TextView
+                android:id="@+id/labelKontak"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/userNameTV"
+                android:layout_marginTop="15dp"
+                android:text="No HP :"
+                android:textColor="#000000"
+                android:textSize="20sp" />
 
-        <EditText
-            android:id="@+id/userSTRtv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/userPraktikTV"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/kotak_input_putih"
-            android:editable="false"
-            android:paddingLeft="8dp"
-            android:text="STR" />
+            <EditText
+                android:id="@+id/kontakUserTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/labelKontak"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/kotak_input_putih"
+                android:minHeight="48dp"
+                android:paddingLeft="8dp" />
 
-        <EditText
-            android:id="@+id/userSIPtv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/userSTRtv"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/kotak_input_putih"
-            android:text="SIP"
-            android:paddingLeft="8dp"
-            android:editable="false"/>
+            <TextView
+                android:id="@+id/labelDomisili"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/kontakUserTV"
+                android:layout_marginTop="15dp"
+                android:text="Domisili : "
+                android:textColor="#000000"
+                android:textSize="20sp" />
 
-        <EditText
-            android:id="@+id/userWprkExpTV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/userSIPtv"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/kotak_input_putih"
-            android:text="Pengalaman Kerja"
-            android:paddingLeft="8dp"
-            android:editable="false"/>
+            <EditText
+                android:id="@+id/userdom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/labelDomisili"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/kotak_input_putih"
+                android:minHeight="48dp"
+                android:paddingLeft="8dp" />
+
+            <TextView
+                android:id="@+id/labelPraktik"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/userdom"
+                android:layout_marginTop="15dp"
+                android:text="Praktik : "
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/userPraktikTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/labelPraktik"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/kotak_input_putih"
+                android:minHeight="48dp"
+                android:paddingLeft="8dp" />
+
+            <TextView
+                android:id="@+id/labelSTR"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/userPraktikTV"
+                android:layout_marginTop="15dp"
+                android:text="STR : "
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/userSTRtv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/labelSTR"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/kotak_input_putih"
+                android:editable="false"
+                android:paddingLeft="8dp" />
+
+            <TextView
+                android:id="@+id/labelSIP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/userSTRtv"
+                android:layout_marginTop="15dp"
+                android:text="SIP : "
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/userSIPtv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/labelSIP"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/kotak_input_putih"
+                android:editable="false"
+                android:paddingLeft="8dp" />
+
+            <TextView
+                android:id="@+id/labelPengalaman"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/userSIPtv"
+                android:layout_marginTop="15dp"
+                android:text="Pengalaman Kerja : "
+                android:textSize="20sp"
+                android:textColor="#000000" />
+
+            <EditText
+                android:id="@+id/userWprkExpTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/labelPengalaman"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/kotak_input_putih"
+                android:editable="false"
+                android:paddingLeft="8dp" />
 
 
-    </RelativeLayout>
+        </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/menuRL"
@@ -149,5 +216,5 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </RelativeLayout>
-
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>
