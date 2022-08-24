@@ -40,7 +40,7 @@ class RiwayatSaldoFragment : Fragment(){
 
         mAuth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
-        db.collection("saldo")
+        db.collection("saldo").orderBy("id").limitToLast(100)
             .get()
             .addOnSuccessListener {
                 val data = it.toObjects(Saldo::class.java)

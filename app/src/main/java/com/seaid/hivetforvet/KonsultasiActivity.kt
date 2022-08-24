@@ -44,7 +44,7 @@ class KonsultasiActivity : AppCompatActivity() {
     }
 
     private fun EventChangeListener() {
-        val reference = FirebaseDatabase.getInstance().getReference("konsultasi")
+        val reference = FirebaseDatabase.getInstance().getReference("konsultasi").orderByKey().limitToLast(100)
 
         reference.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
