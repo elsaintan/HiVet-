@@ -160,23 +160,23 @@ class ChatActivity : AppCompatActivity() {
         tanggal.text = formatted
 
         mDbRef = FirebaseFirestore.getInstance()
-        val uidRef  = mDbRef.collection("users").document(userid.toString())
-
-        uidRef.get().addOnSuccessListener { doc ->
-            if (doc != null) {
-                val user = doc.toObject(User::class.java)
-                textName.text = user!!.name
-                if (user!!.photoProfile == ""){
-                    fotoProfile.setImageResource(R.drawable.profile)
-                }else{
-                    Glide.with(this).load(user!!.photoProfile).into(fotoProfile)
+        val uidRef  = FirebaseDatabase.getInstance().getReference("users")
+        uidRef.child(userid.toString())
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val user: User? = snapshot.getValue(User::class.java)
+                    textName.text = user!!.name
+                    if (user!!.photoProfile == ""){
+                        fotoProfile.setImageResource(R.drawable.profile3)
+                    }else{
+                        Glide.with(this@ChatActivity).load(user!!.photoProfile).into(fotoProfile)
+                    }
                 }
-            } else {
-                Toast.makeText(this, "No such document", Toast.LENGTH_SHORT).show()
-            }
-        }.addOnFailureListener { exception ->
-            Toast.makeText(this, "get failed with "+exception, Toast.LENGTH_SHORT).show()
-        }
+
+                override fun onCancelled(error: DatabaseError) {
+                    throw error.toException()
+                }
+            })
     }
 
     private fun SeenMessage(userid: String, id_konsul: String) {

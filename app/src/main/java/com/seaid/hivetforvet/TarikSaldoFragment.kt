@@ -11,6 +11,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.seaid.hivetforvet.models.Saldo
 import java.time.LocalDateTime
@@ -53,12 +54,12 @@ class TarikSaldoFragment : Fragment() {
             val tariksaldo = Saldo(id, mAuth.currentUser!!.uid, "Penarikan",
                 jml.text.toString(), tarik.text.toString(), nama.text.toString(), ke.text.toString(), tanggal, "Proses"
             )
-            db = FirebaseFirestore.getInstance()
-            db.collection("saldo").document(id).set(tariksaldo)
-                .addOnSuccessListener {
-                    Toast.makeText(fgv1.context, "Berhasil mengajukan penarikan", Toast.LENGTH_SHORT).show()
-                }
-                .addOnFailureListener {
+
+            val data = FirebaseDatabase.getInstance().getReference("saldo")
+            data.child(mAuth.currentUser!!.uid).setValue(tariksaldo)
+                .addOnSuccessListener{
+                    Toast.makeText(fgv1.context, "Berhasil mengajukan penarikan dana", Toast.LENGTH_SHORT).show()
+                }.addOnFailureListener {
                     Toast.makeText(fgv1.context, "Error "+it.message, Toast.LENGTH_SHORT).show()
                 }
         }

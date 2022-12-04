@@ -5,6 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.seaid.hivetforvet.databinding.ActivityRincianAppointmentBinding
 import com.seaid.hivetforvet.models.*
@@ -33,58 +37,58 @@ class RincianAppointmentActivity : AppCompatActivity() {
     }
 
     private fun showData(id: String?) {
-        db = FirebaseFirestore.getInstance()
-        db.collection("booking_appointments").document(id.toString())
-            .get()
-            .addOnSuccessListener {
-                if(it != null){
-                    val janjitemu = it.toObject(JanjiTemu::class.java)
+        val ref = FirebaseDatabase.getInstance().getReference("booking_appointments")
+        ref.child(id.toString())
+            .addValueEventListener(object : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val janjitemu : JanjiTemu? = snapshot.getValue(JanjiTemu::class.java)
                     rabinding.tanggalap.text = janjitemu!!.tanggal
-                    rabinding.status.text = janjitemu!!.status
-                    rabinding.waktuTV.text = janjitemu!!.waktu
+                    rabinding.status.text = janjitemu.status
+                    rabinding.waktuTV.text = janjitemu.waktu
                     showuserdata(janjitemu.user_id)
-                    //showpetdata(janjitemu.pet_id)
                 }
-            }
+                override fun onCancelled(error: DatabaseError) {
+                    throw error.toException()
+                }
+
+            })
         showdrhdata()
     }
 
-    /**private fun showpetdata(petId: String?) {
-        val data2 = db.collection("peliharaan").document(petId.toString())
-        data2.get().addOnSuccessListener {
-            val pet = it.toObject(peliharaan::class.java)
-            if (pet != null){
-
-                holder.jenisHewan.text = pet.jenis
-                holder.namaHewan.text = pet.nama
-            }
-        }
-    **/
-
     private fun showuserdata(userId: String?) {
-        val data1 = db.collection("users").document(userId.toString())
-        data1.get().addOnSuccessListener {
-            val user = it.toObject(User::class.java)
-            if (user != null){
-                rabinding.nameTV.text = user.name
-                if (user.photoProfile != null){
-                    rabinding.photodrh.setImageResource(R.drawable.profile)
-                }else{
-                    Glide.with(this).load(user.photoProfile).into(rabinding.photodrh)
+        val data1 = FirebaseDatabase.getInstance().getReference("users")
+        data1.child(userId.toString())
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val user: User? = snapshot.getValue(User::class.java)
+                    rabinding.nameTV.text = user!!.name
+                    if (user.photoProfile != null){
+                        rabinding.photodrh.setImageResource(R.drawable.icon_user_profile)
+                    }else{
+                        Glide.with(this@RincianAppointmentActivity).load(user.photoProfile).into(rabinding.photodrh)
+                    }
                 }
-            }
-        }
+                override fun onCancelled(error: DatabaseError) {
+                    throw error.toException()
+                }
+
+            })
     }
 
     private fun showdrhdata(){
-        val data1 = db.collection("drh").document(mAuth.currentUser!!.uid)
-        data1.get().addOnSuccessListener {
-            val drh = it.toObject(Vet::class.java)
-            if (drh != null){
-                rabinding.tempatTV.text = drh.alamat
-                rabinding.tempatpraktik.text = drh.tempat
-                rabinding.tempatklinik.text = drh.alamat
-            }
-        }
+        val data1 = FirebaseDatabase.getInstance().getReference("drh")
+            data1.child(mAuth.currentUser!!.uid)
+                .addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val drh: Vet? = snapshot.getValue(Vet::class.java)
+                        rabinding.tempatTV.text = drh!!.alamat
+                        rabinding.tempatpraktik.text = drh.tempat
+                        rabinding.tempatklinik.text = drh.alamat
+                    }
+                    override fun onCancelled(error: DatabaseError) {
+                        throw error.toException()
+                    }
+
+                })
     }
 }

@@ -16,6 +16,10 @@ import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.auth.User
 import com.google.firebase.storage.FirebaseStorage
@@ -24,6 +28,7 @@ import com.seaid.hivetforvet.databinding.ActivityEditProfileBinding
 import com.seaid.hivetforvet.databinding.ActivityUserProfileBinding
 import com.seaid.hivetforvet.models.Vet
 import java.io.IOException
+import java.util.HashMap
 
 class EditProfileActivity : AppCompatActivity() {
 
@@ -62,17 +67,17 @@ class EditProfileActivity : AppCompatActivity() {
         editBinding.saveBTN.visibility = View.VISIBLE
 
         editBinding.userImage.setOnClickListener{
-            chooseImage()
+            //chooseImage()
         }
 
         editBinding.saveBTN.setOnClickListener {
             if (filePath.toString() == photo){
                 updateDataUser()
             }else{
-                uploadImage()
+                //uploadImage()
                 updateDataUser()
             }
-            editBinding.progressBar.visibility = View.VISIBLE
+            //editBinding.progressBar.visibility = View.VISIBLE
         }
     }
 
@@ -80,12 +85,12 @@ class EditProfileActivity : AppCompatActivity() {
         super.onBackPressed()
     }
 
-    private fun chooseImage(){
+    /*private fun chooseImage(){
         val intent: Intent = Intent()
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
         startActivityForResult(Intent.createChooser(intent, "Select Image"), PICK_IMAGE_REQUEST)
-    }
+    }*/
 
     private fun uploadImage() {
         if(filePath != null){
@@ -118,97 +123,59 @@ class EditProfileActivity : AppCompatActivity() {
                 e.printStackTrace()
             }
         }
-    }
+    }*/
 
     private fun updateDataUser() {
-        /*val name = editBinding.nameTV.text.toString()
-        val email = editBinding.emailTV.text.toString()
-        val useredit = Vet()
+        val name = editBinding.userNameTV.text.toString()
+        val kontak = editBinding.kontakUserTV.text.toString()
+        val tempat = editBinding.userdom.text.toString()
+        val alanat = editBinding.userSTRtv.text.toString()
 
-        val user = mDbRef.collection("users")
-        user.document(mAuth.uid).set(useredit)
-        startActivity(Intent(this, MainActivity::class.java))*/
 
-        val name = editBinding.userNameTV.text
-        val kontak = editBinding.kontakUserTV.text
-        val tempat = editBinding.userPraktikTV.text
-        val alanat = editBinding.userSTRtv.text
 
-        mDbRef.collection("drh").document(mAuth!!.uid)
-            .update("Name", name.toString(),
-                "Contact", kontak.toString(),
-            "tempat", tempat.toString(),
-            "alamat", alanat.toString())
-            .addOnSuccessListener {
-                Toast.makeText(this, "Berhasil Mengubah Jadwal", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener {
+        Toast.makeText(this, name, Toast.LENGTH_SHORT).show()
+
+        val ref = FirebaseDatabase.getInstance().getReference()
+        val hm = HashMap<String, Any>()
+        hm["Name"] = name
+        hm["Contact"] = kontak
+        hm["tempat"] = tempat
+        hm["alamat"] = alanat
+
+        ref.child("drh").child(mAuth.uid).updateChildren(hm)
+            .addOnSuccessListener{
+                Toast.makeText(this, "Berhasil Memperbarui Data", Toast.LENGTH_SHORT).show()
+            }.addOnFailureListener {
                 throw it
             }
 
     }
 
     private fun showDataUser() {
-        checkPermission(
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            EditProfileActivity.STORAGE_PERMISSION_CODE
-        )
-        val uidRef  = mDbRef.collection("drh").document(mAuth.uid)
-        uidRef.get().addOnSuccessListener { doc ->
-            if (doc != null) {
-                val user = doc.toObject(Vet::class.java)
-                editBinding.userNameTV.setText(user!!.Name)
-                editBinding.kontakUserTV.setText(user!!.Contact)
-                editBinding.userPraktikTV.setText(user.tempat)
-                editBinding.userdom.setText(user.alamat)
-                editBinding.userSTRtv.setText(user.STR)
-                editBinding.userSIPtv.setText(user.SIP)
-                editBinding.userWprkExpTV.setText(user.WorkExp)
-                photo = user!!.photoProfile
-                if (user!!.photoProfile == "" || user!!.photoProfile == null){
-                    editBinding.userImage.setImageResource(R.drawable.profile)
-                }else{
-                    Glide.with(this).load(user!!.photoProfile).into(editBinding.userImage)
+
+        val ref = FirebaseDatabase.getInstance().getReference("drh")
+        ref.child(mAuth.uid)
+            .addValueEventListener(object : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val user : Vet? = snapshot.getValue(Vet::class.java)
+                    editBinding.userNameTV.setText(user!!.Name)
+                    editBinding.kontakUserTV.setText(user!!.Contact)
+                    editBinding.userPraktikTV.setText(user.tempat)
+                    editBinding.userdom.setText(user.alamat)
+                    editBinding.userSTRtv.setText(user.STR)
+                    editBinding.userSIPtv.setText(user.SIP)
+                    editBinding.userWprkExpTV.setText(user.WorkExp)
+                    photo = user!!.photoProfile
+                    if (user!!.photoProfile == "" || user!!.photoProfile == null){
+                        editBinding.userImage.setImageResource(R.drawable.profile)
+                    }else{
+                        Glide.with(this@EditProfileActivity).load(user!!.photoProfile).into(editBinding.userImage)
+                    }
                 }
-                    //Toast.makeText(this, "{$user.name}", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "No such document ", Toast.LENGTH_SHORT).show()
-            }
-        }.addOnFailureListener { exception ->
-            Toast.makeText(this, "get failed with "+exception, Toast.LENGTH_SHORT).show()
-        }
-    }
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(this@EditProfileActivity, "get failed with "+error, Toast.LENGTH_SHORT).show()
+                }
 
-    // Function to check and request permission.
-    private fun checkPermission(permission: String, requestCode: Int) {
-        if (ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_DENIED) {
-
-            // Requesting the permission
-            ActivityCompat.requestPermissions(this, arrayOf(permission), requestCode)
-        } else {
-            Toast.makeText(this, "Permission already granted", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    // This function is called when the user accepts or decline the permission.
-    // Request Code is used to check which permission called this function.
-    // This request code is provided when the user is prompt for permission.
-    override fun onRequestPermissionsResult(requestCode: Int,
-                                            permissions: Array<String>,
-                                            grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == CAMERA_PERMISSION_CODE) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Camera Permission Granted", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "Camera Permission Denied", Toast.LENGTH_SHORT).show()
-            }
-        } else if (requestCode == STORAGE_PERMISSION_CODE) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Storage Permission Granted", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "Storage Permission Denied", Toast.LENGTH_SHORT).show()
-            }
-        }
+            })
     }
 }

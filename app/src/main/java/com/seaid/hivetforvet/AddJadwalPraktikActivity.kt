@@ -143,22 +143,23 @@ class AddJadwalPraktikActivity : AppCompatActivity() {
     }
 
     private fun EventChangeListener() {
-        db = FirebaseFirestore.getInstance()
-        db.collection("booking_appointments").orderBy("tanggal").limitToLast(100)
-            .get()
-            .addOnSuccessListener {
-                val data = it.toObjects(JanjiTemu::class.java)
-                val items = data.size
-                if (items > 0){
-                    for (item in data){
-                        if(item.drh_id == mAuth.uid){
-                            janjiTemuList.add(item)
-                        }
+
+        val data = FirebaseDatabase.getInstance().getReference("booking_appointments")
+        data.orderByChild("tanggal").limitToLast(100)
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (snapshot in snapshot.children) {
+                        val item : JanjiTemu? = snapshot.getValue(JanjiTemu::class.java)
+                        janjiTemuList.add(item!!)
                     }
                     abinding.recyclerView.adapter = adapter
                     adapter.notifyDataSetChanged()
                 }
-            }
+
+                override fun onCancelled(error: DatabaseError) {
+                    throw error.toException()
+                }
+            })
     }
 
     private fun showData() {
@@ -173,6 +174,7 @@ class AddJadwalPraktikActivity : AppCompatActivity() {
                         abinding.timeendtTV.setText(data!!.end)
                         abinding.durationTV.setText(data!!.duration)
                         abinding.slottv.setText(data!!.slot)
+                        abinding.jampraktikTV.setText(data!!.tanggal)
                     }
                 }
                 override fun onCancelled(error: DatabaseError) {
@@ -181,22 +183,21 @@ class AddJadwalPraktikActivity : AppCompatActivity() {
 
             })
 
-        val uidRef  = db.collection("drh").document(mAuth.currentUser!!.uid)
+        val uidRef = FirebaseDatabase.getInstance().getReference("drh")
+        uidRef.child(mAuth.currentUser!!.uid)
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val user = snapshot.getValue(Vet::class.java)
+                    abinding.usernametv.text = user!!.Name
+                    abinding.tempatpraktikTV.text = user!!.tempat
+                    abinding.slottv.setText(user!!.status)
+                    abinding.daerah.setText(user!!.alamat)
+                }
 
-        uidRef.get().addOnSuccessListener { doc ->
-            if (doc != null) {
-                val user = doc.toObject(Vet::class.java)
-                abinding.usernametv.text = user!!.Name
-                abinding.tempatpraktikTV.text = user!!.tempat
-                abinding.jampraktikTV.setText(user!!.booking)
-                abinding.slottv.setText(user!!.status)
-                //Toast.makeText(this, "{$user.name}", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "No such document", Toast.LENGTH_SHORT).show()
-            }
-        }.addOnFailureListener { exception ->
-            Toast.makeText(this, "get failed with "+exception, Toast.LENGTH_SHORT).show()
-        }
+                override fun onCancelled(error: DatabaseError) {
+                    throw error.toException()
+                }
+            })
     }
 
     private fun saveData() {
@@ -210,6 +211,7 @@ class AddJadwalPraktikActivity : AppCompatActivity() {
         val reference = FirebaseDatabase.getInstance().getReference()
         val hashMap = HashMap<String, Any>()
         hashMap["id"] = id
+        hashMap["tanggal"] = date
         hashMap["start"] = start
         hashMap["end"] = end
         hashMap["duration"] = duration
@@ -223,12 +225,11 @@ class AddJadwalPraktikActivity : AppCompatActivity() {
                 Toast.makeText(this, " "+it, Toast.LENGTH_SHORT).show()
             }
 
-       db.collection("drh").document(mAuth.currentUser!!.uid)
-        .update("booking", date.toString(),
-        "status", "1")
-            .addOnSuccessListener {
-                Toast.makeText(this, "Berhasil Mengubah Jadwal", Toast.LENGTH_SHORT).show()
-            }
+        val hm = HashMap<String, Any>()
+        hm["booking"] = abinding.daerah.text.toString() + "_" + date
+        hm["status"] = "1"
+        val updatedrh = FirebaseDatabase.getInstance().getReference("drh")
+        updatedrh.child(mAuth.currentUser!!.uid).updateChildren(hm)
             .addOnFailureListener {
                 throw it
             }

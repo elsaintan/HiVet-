@@ -17,10 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.seaid.hivetforvet.ChatActivity
 import com.seaid.hivetforvet.KonsultasiActivity
 import com.seaid.hivetforvet.R
-import com.seaid.hivetforvet.models.Chat
-import com.seaid.hivetforvet.models.User
-import com.seaid.hivetforvet.models.konsultasi
-import com.seaid.hivetforvet.models.peliharaan
+import com.seaid.hivetforvet.models.*
 import com.seaid.hivetforvet.viewmodel.KonsultasiViewModel
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
@@ -48,35 +45,41 @@ class kBerjalanAdapter (private val konsultasiList : ArrayList<konsultasi>) : Re
         val dateInString = konsultasi.tanggal
         if (isDateValid(dateInString.toString())){
             changeStatus(konsultasi.id.toString(), holder, "6")
-            //holder.button.text = "Selesai"
-            //Toast.makeText(holder.itemView.context, "This is true", Toast.LENGTH_SHORT).show()
-        }else{
-            //holder.button.text = "Rincian"
-            //Toast.makeText(holder.itemView.context, "This is false", Toast.LENGTH_SHORT).show()
         }
 
-        mDbRef = FirebaseFirestore.getInstance()
-        val data1 = mDbRef.collection("users").document(konsultasi.id_user.toString())
-        data1.get().addOnSuccessListener {
-            val user = it.toObject(User::class.java)
-            if (user != null){
-                holder.nameUser.text = user.name
-                if (user.photoProfile.equals(null) || user.photoProfile.equals("")){
-                    holder.profileUser.setImageResource(R.drawable.profile)
-                }else{
-                    Glide.with(holder.itemView.context).load(user.photoProfile).into(holder.profileUser)
+        val ref = FirebaseDatabase.getInstance().getReference("users")
+        ref.child(konsultasi.id_user.toString())
+            .addValueEventListener(object : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val user : User? = snapshot.getValue(User::class.java)
+                    holder.nameUser.text = user!!.name
+                    if (user.photoProfile.equals(null) || user.photoProfile.equals("")){
+                        holder.profileUser.setImageResource(R.drawable.profile3)
+                    }else{
+                        Glide.with(holder.itemView.context).load(user.photoProfile).into(holder.profileUser)
+                    }
                 }
-            }
-        }
+                override fun onCancelled(error: DatabaseError) {
+                    throw error.toException()
+                }
 
-        val data2 = mDbRef.collection("peliharaan").document(konsultasi.id_pet.toString())
-        data2.get().addOnSuccessListener {
-            val pet = it.toObject(peliharaan::class.java)
-            if (pet != null){
-                holder.jenisHewan.text = pet.jenis
-                holder.namaHewan.text = pet.nama
-            }
-        }
+            })
+
+        val data2 = FirebaseDatabase.getInstance().getReference("peliharaan")
+        data2.child(konsultasi.id_pet.toString())
+            .addValueEventListener(object : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val pet: peliharaan? = snapshot.getValue(peliharaan::class.java)
+                    if (pet != null) {
+                        holder.jenisHewan.text = pet.jenis
+                        holder.namaHewan.text = pet.nama
+                    }
+                }
+                override fun onCancelled(error: DatabaseError) {
+                    throw error.toException()
+                }
+
+            })
 
         when(konsultasi.status){
             "1" -> holder.button.text = "Terima"

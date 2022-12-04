@@ -14,19 +14,19 @@ import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.protobuf.Value
 import com.seaid.hivetforvet.adapters.kBerjalanAdapter
 import com.seaid.hivetforvet.databinding.ActivityMainBinding
 import com.seaid.hivetforvet.models.Saldo
 import com.seaid.hivetforvet.models.Vet
 import com.seaid.hivetforvet.models.konsultasi
+import com.seaid.hivetforvet.models.peliharaan
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mBinding : ActivityMainBinding
 
     private lateinit var mAuth : FirebaseAuth
-    private lateinit var mDbRef : FirebaseFirestore
-    private lateinit var reference: DatabaseReference
     private var backPressedTime = 0L
 
     companion object {
@@ -41,7 +41,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
         mAuth = FirebaseAuth.getInstance()
-        mDbRef = FirebaseFirestore.getInstance()
 
         val uId = mAuth.currentUser!!.uid
 
@@ -116,42 +115,40 @@ class MainActivity : AppCompatActivity() {
 
     private fun hitungSaldo() {
         var saldo = 0
-        mDbRef = FirebaseFirestore.getInstance()
-        mDbRef.collection("saldo")
-            .get()
-            .addOnSuccessListener {
-                val data = it.toObjects(Saldo::class.java)
-                val items = data.size
-                if (items > 0) {
-                    for (item in data) {
-                        if (item.id_drh == mAuth.currentUser!!.uid) {
-                            saldo += item.jumlah!!.toDouble().toInt()
-                        }
+        val data = FirebaseDatabase.getInstance().getReference("saldo")
+        data.orderByChild("id_drh")
+            .equalTo(mAuth.currentUser!!.uid)
+            .addValueEventListener(object : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (snapshot in snapshot.children) {
+                        val item : Saldo? = snapshot.getValue(Saldo::class.java)
+                        saldo += item?.jumlah!!.toDouble().toInt()
                     }
+                    mBinding.labelSaldo.setText("Rp $saldo")
                 }
-                mBinding.labelSaldo.text = "Rp $saldo"
-            }
+                override fun onCancelled(error: DatabaseError) {
+                    throw error.toException()
+                }
+            })
     }
 
     private fun setUser(uId: String) {
-        val uidRef  = mDbRef.collection("drh").document(uId)
-
-        uidRef.get().addOnSuccessListener { doc ->
-            if (doc != null) {
-                val user = doc.toObject(Vet::class.java)
-                mBinding.userName.text = "Hai "+user!!.Name+"!"
-                if (user!!.photoProfile == "" || user.photoProfile == null){
-                    mBinding.imageView3.setImageResource(R.drawable.profile)
-                }else{
-                    Glide.with(this).load(user!!.photoProfile).into(mBinding.imageView3)
+        val data = FirebaseDatabase.getInstance().getReference("drh")
+        data.child(uId)
+            .addValueEventListener(object : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val user : Vet? = snapshot.getValue(Vet::class.java)
+                    mBinding.userName.setText("Hai "+user?.Name+"!")
+                    if (user!!.photoProfile == "" || user.photoProfile == null){
+                        mBinding.imageView3.setImageResource(R.drawable.profile)
+                    }else{
+                        Glide.with(this@MainActivity).load(user!!.photoProfile).into(mBinding.imageView3)
+                    }
                 }
-                //Toast.makeText(this, "{$user.name}", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "No such document", Toast.LENGTH_SHORT).show()
-            }
-        }.addOnFailureListener { exception ->
-            Toast.makeText(this, "get failed with "+exception, Toast.LENGTH_SHORT).show()
-        }
+                override fun onCancelled(error: DatabaseError) {
+                    throw error.toException()
+                }
+            })
     }
 
     // Function to check and request permission.

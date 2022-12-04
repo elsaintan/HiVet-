@@ -6,6 +6,10 @@ import android.os.Bundle
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.seaid.hivetforvet.databinding.ActivityUserProfileBinding
 import com.seaid.hivetforvet.models.Vet
@@ -46,11 +50,12 @@ class UserProfileActivity : AppCompatActivity() {
     }
 
     private fun loadProfile(id : String) {
-            val uidRef  = mDbRef.collection("drh").document(id)
 
-            uidRef.get().addOnSuccessListener { doc ->
-                if (doc != null) {
-                    val user = doc.toObject(Vet::class.java)
+        val ref = FirebaseDatabase.getInstance().getReference("drh")
+        ref.child(id)
+            .addValueEventListener(object : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val user : Vet? = snapshot.getValue(Vet::class.java)
                     binding.userNameTV.text = user!!.Name
                     binding.kontakUserTV.text = user.Contact
                     binding.userDomisiliTV.setText(user.alamat)
@@ -59,20 +64,16 @@ class UserProfileActivity : AppCompatActivity() {
                     binding.userSIPtv.text = user.SIP
                     binding.userWprkExpTV.text = user.WorkExp+" Tahun"
                     if (user!!.photoProfile == "" || user.photoProfile == null){
-                        //binding.profileIM.setImageResource(R.drawable.profile)
+                        binding.profileIM.setImageResource(R.drawable.profile)
                     }else{
-                        Glide.with(this).load(user!!.photoProfile).into(binding.profileIM)
+                        Glide.with(this@UserProfileActivity).load(user.photoProfile).into(binding.profileIM)
                     }
-                    //Toast.makeText(this, "{$user.name}", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(this, "No such document", Toast.LENGTH_SHORT).show()
                 }
-            }.addOnFailureListener { exception ->
-                Toast.makeText(this, "get failed with "+exception, Toast.LENGTH_SHORT).show()
-            }
+                override fun onCancelled(error: DatabaseError) {
+                    throw error.toException()
+                }
 
-
-
+            })
         }
 
 

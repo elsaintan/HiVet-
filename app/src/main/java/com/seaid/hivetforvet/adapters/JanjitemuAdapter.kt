@@ -9,6 +9,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.seaid.hivetforvet.ChatActivity
 import com.seaid.hivetforvet.R
@@ -46,27 +50,37 @@ class JanjitemuAdapter(private val janjitemuList: ArrayList<JanjiTemu>) : Recycl
             holder.button.text = "Rincian"
         }
 
-        mDbRef = FirebaseFirestore.getInstance()
-        val data1 = mDbRef.collection("users").document(data.user_id.toString())
-        data1.get().addOnSuccessListener {
-            val user = it.toObject(User::class.java)
-            if (user != null){
-                holder.nama.text = user.name
-                if (user.photoProfile != null){
-                    holder.foto.setImageResource(R.drawable.profile)
-                }else{
-                    Glide.with(holder.itemView.context).load(user.photoProfile).into(holder.foto)
+        val ref = FirebaseDatabase.getInstance().getReference("users").child(data.user_id.toString())
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val user: User? = snapshot.getValue(User::class.java)
+                    if (user != null){
+                        holder.nama.text = user.name
+                        if (user.photoProfile != null){
+                            holder.foto.setImageResource(R.drawable.icon_user_profile)
+                        }else{
+                            Glide.with(holder.itemView.context).load(user.photoProfile).into(holder.foto)
+                        }
+                    }
                 }
-            }
-        }
+                override fun onCancelled(error: DatabaseError) {
+                    throw error.toException()
+                }
+            })
 
-        val data2 = mDbRef.collection("peliharaan").document(data.pet_id.toString())
-        data2.get().addOnSuccessListener {
-            val pet = it.toObject(peliharaan::class.java)
-            if (pet != null){
-                holder.namah.text = pet.jenis
-            }
-        }
+        val peliharaan = FirebaseDatabase.getInstance().getReference("peliharaan").child(data.pet_id.toString())
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val pet: peliharaan? = snapshot.getValue(peliharaan::class.java)
+                    if (pet != null){
+                        holder.namah.text = pet.jenis
+                    }
+                }
+                override fun onCancelled(error: DatabaseError) {
+                    throw error.toException()
+                }
+
+            })
 
         holder.button.setOnClickListener {
             val intent = Intent(holder.itemView.context, RincianAppointmentActivity::class.java)
