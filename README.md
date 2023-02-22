@@ -1,4 +1,4 @@
-<p align="center"><img src="https://drive.google.com/uc?export=view&id=11otZKgDxQQizOmwoPvfR2H2IE_XdfvJW" width="400"></p>
+<p align="center"><img src="https://drive.google.com/uc?export=view&id=11otZKgDxQQizOmwoPvfR2H2IE_XdfvJW" width="150"></p>
 
 
 ## About Hivet! for Vet
